@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,300&family=Source+Sans+Pro:wght@400;700&display=swap');
+
+html, body, * {
+    font-family: $font--body;
+    font-size: 14px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $font--heading;
+}
