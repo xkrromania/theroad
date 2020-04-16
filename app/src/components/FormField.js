@@ -34,7 +34,7 @@ const FormField = ({ label, type, placeholder, name, value, options, handleChang
 
             {type === 'textarea' && (
                 <textarea
-                    className="input"
+                    className="textarea"
                     id={name}
                     name={name}
                     type={type}
