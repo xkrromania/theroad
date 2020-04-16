@@ -12,6 +12,7 @@ $form__label-color: #686868;
     padding: 1em;
 
     .input {
+        background: transparent;
         border: none;
         border-bottom: 1px solid $form__input-border;
         color: $form__input-color;
@@ -21,6 +22,7 @@ $form__label-color: #686868;
         box-sizing: border-box;
         outline: none;
         font-weight: normal;
+        padding-bottom: 2px;
 
         &:focus {
             border-color: darken($form__input-border, 5%);
@@ -36,13 +38,15 @@ $form__label-color: #686868;
     }
 
     .select {
-        margin-top: 8px;
-        position: relative;
-        width: 100%;
-        border: none;
-        box-shadow: none;
         background: transparent;
-        background-image: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        position: relative;
+        margin-top: 8px;
+        margin-left: -8px;
+        padding-bottom: 2px;
+        width: 100%;
 
         &:focus {
             outline: none;

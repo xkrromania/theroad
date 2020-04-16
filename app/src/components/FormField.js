@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FormField = ({ label, type, name, value, options, handleChange }) => {
+const FormField = ({ label, type, placeholder, name, value, options, handleChange }) => {
     return (
         <div className="form-field">
             <label htmlFor={name} className="label">

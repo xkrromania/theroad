@@ -25,6 +25,12 @@ body {
         h1, h2 {
             font-family: $highlight-font;
         }
+
+        &-container {
+            padding: 0 1em;
+            margin: 0 auto;
+            max-width: $container-width;
+        }
     }
 
     &__container {

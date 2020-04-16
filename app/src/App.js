@@ -5,7 +5,9 @@ function App() {
   return (
     <div className="app">
       <header className="app__header">
-        <h1>Game day</h1>
+        <div className="app__header-container">
+          <h1>The Big Match</h1>
+        </div>
       </header>
       <div className="app__container">
         <GameView></GameView>
