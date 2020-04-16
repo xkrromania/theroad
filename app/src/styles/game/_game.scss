@@ -1,1 +1,8 @@
+@import 'game-variables';
 @import 'cards';
+
+.game-view {
+    font-family: $game-font;
+    padding: 8px 24px;
+    margin: 0 auto;
+}

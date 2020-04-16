@@ -1,10 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,300&family=Source+Sans+Pro:wght@400;700&display=swap');
+$app-body-color: $dark-text;
+$app-heading-color: $dark-text;
+$app-heading-font: $main-font;
+$app-body-font: $main-font;
 
-html, body, * {
-    font-family: $font--body;
+html,
+body,
+p {
+    font-family: $app-body-font;
     font-size: 14px;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: $font--heading;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $app-heading-font;
+}
+
+h1 {
+    font-size: 54px;
+    font-weight: 300;
+    line-height: 58px;
+    margin: 0 0 8px;
+}
+
+
+p {
+    font-family: $app-body-font;
+    font-size: 16px;
+    line-height: 26px;
+    text-indent: 30px;
+    margin: 0;
+}
+
+
+a {
+    color: $link-color;
+    text-decoration: underline;
+
+    &:focus,
+    &:hover,
+        {
+        color: $link-color--hover
+    }
+
+    &:active {
+        color: $link-color--active
+    }
 }

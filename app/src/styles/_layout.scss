@@ -1,0 +1,45 @@
+
+$app-bg: $main-color;
+$app__header-bg: $alternative-color;
+$app__header-color: $light-text;
+$app__footer-color: $light-text;
+$app__footer-bg: $main-color;
+
+body {
+    overscroll-behavior: none;
+}
+
+.app {
+    background: $app-bg;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow: hidden;
+
+    &__header {
+        background: $app__header-bg;
+        color: $app__header-color;
+        padding: 16px 8px;
+        width: 100%;
+
+        h1, h2 {
+            font-family: $highlight-font;
+        }
+    }
+
+    &__container {
+        flex: 1;
+        margin: 0 auto;
+        max-width: $container-width;
+        width: 100%;
+        overflow: auto;
+    }
+
+    &__footer {
+        background: $app__footer-bg;
+        color: $light-text;
+        padding: 16px 8px;
+        text-align: center;
+        width: 100%;
+    }
+}

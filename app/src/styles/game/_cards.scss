@@ -1,9 +1,45 @@
+$card-background: white;
+$card__name-color: #fefefe;
+$card__stat-bg: #c2c2c2;
+$card__stat-color: #57727C;
+
 .card-list {
-    background: white;
-    display: grid;
+    margin-top: 8px;
+    padding: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: scroll;
 }
 
 .card {
-    border: 1px solid grey;
-    padding: 8px;
+    background: $card-background;
+    box-shadow: inset 0px 0px 0px rgba(18, 26, 49, 0.15), inset 0px 0px 0px rgba(18, 26, 49, 0.15), 5px 5px 0px rgba(55, 84, 170, 0.25), -1px -1px 5px rgba(55, 84, 170, 0.15);
+    border-radius: 16px;
+    color: $dark-text;
+    width: 200px;
+    height: 324px;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+
+    &+.card {
+        margin-left: 8px;
+    }
+
+    &__class {
+        background: #4225c0;
+        color: #fefefe;
+        height: 128px;
+        font-size: 2em;
+    }
+
+    &__name {
+        font-family: $highlight-font;
+        font-size: 1.5em;
+    }
+
+    &__description {
+        font-size: 1em;
+        color: lighten($dark-text, 5%);
+    }
 }

@@ -1,2 +1,15 @@
-$font--heading: 'Lato', sans-serif;
-$font--body: 'Source Sans Pro', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Fira+Sans:ital,wght@0,400;0,700;1,300&display=swap');
+
+$dark-text: #252525;
+$light-text: #fff;
+$main-color: #45CB85;
+$alternative-color: #7768AE;
+$highlight-color: #EAD94C;
+$container-width: 1440px;
+
+$main-font: 'Fira Sans', sans-serif;
+$highlight-font: 'Bangers', cursive;
+
+$link-color: #2871d1;
+$link-color--hover: lighten($link-color, 10%);
+$link-color--active: lighten($link-color, 5%);

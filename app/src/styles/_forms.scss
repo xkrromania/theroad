@@ -1,0 +1,87 @@
+/*** FORMS ***/
+$form__input-color: $dark-text;
+$form__input-border: #d8d8d8;
+$form__label-color: #686868;
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+    border: none;
+    background: #fff;
+    padding: 1em;
+
+    .input {
+        border: none;
+        border-bottom: 1px solid $form__input-border;
+        color: $form__input-color;
+        font-size: 1em;
+        width: 100%;
+        margin-top: 8px;
+        box-sizing: border-box;
+        outline: none;
+        font-weight: normal;
+
+        &:focus {
+            border-color: darken($form__input-border, 5%);
+        }
+
+        &:not(:first-child) {
+            border-left: 0;
+        }
+
+        &:not(:last-child) {
+            border-right: 0;
+        }
+    }
+
+    .select {
+        margin-top: 8px;
+        position: relative;
+        width: 100%;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        background-image: none;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 25%;
+            left: 12px;
+            border-top: 12px solid #999;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+          }
+    }
+
+    .label {
+        color: $form__label-color;
+        font-size: 0.8em;
+        text-transform: uppercase;
+    }
+}
+
+.add-card-form {
+    background: #e9e7e7;
+    border-radius: 16px;
+    padding: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: row;
+
+    .form-field {
+        align-self:flex-start;
+        flex: 1;
+        margin-right: 24px;
+        margin-bottom: 0;
+    }
+
+    .add-btn {
+        flex: 0 0 120px;
+    }
+}

@@ -1,0 +1,73 @@
+/*** BUTTONS ***/
+$btn--default-bg: #d3d3d3;
+$btn--default-text: $dark-text;
+$btn--default-hover-bg: #b6c3df;
+$btn--default-hover-text: $dark-text;
+$btn--default-border: #494949;
+
+$btn--danger-bg: #ba324f;
+$btn--danger-text: $light-text;
+$btn--danger-hover-bg: darken($btn--danger-bg, 5%);
+$btn--danger-hover-text: $light-text;
+$btn--danger-border: darken($btn--danger-bg, 5%);
+
+$btn--success-bg: #119da4;
+$btn--success-text: $light-text;
+$btn--success-hover-bg: darken($btn--success-bg, 5%);
+$btn--success-hover-text: $light-text;
+$btn--success-border: darken($btn--success-bg, 5%);
+
+.btn,
+.btn:active {
+    appearance: none;
+    background: $btn--default-bg;
+    border: 1px solid $btn--default-border;
+    border-radius: 8px;
+    color: $btn--default-text;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 26px;
+    height: 36px;
+    outline: none;
+    padding: 4px 16px;
+    position: relative;
+    text-rendering: auto;
+    text-decoration: none;
+    transition: all 200ms ease-out;
+    user-select: none;
+    vertical-align: middle;
+    text-transform: uppercase;
+    -webkit-font-smoothing: antialiased;
+
+    &:not(disabled):hover,
+    &:not(disabled):focus {
+        background: $btn--default-hover-bg;
+        color: $btn--default-hover-text;
+    }
+
+
+    &.success {
+        background: $btn--success-bg;
+        border-color: $btn--success-border;
+        color: $btn--success-text;
+
+        &:not(disabled):hover,
+        &:not(disabled):focus {
+            background: $btn--success-hover-bg;
+            color: $btn--success-hover-text;
+        }
+    }
+
+    &.danger {
+        background: $btn--danger-bg;
+        border-color: $btn--danger-border;
+        color: $btn--danger-text;
+
+        &:not(disabled):hover,
+        &:not(disabled):focus {
+            background: $btn--danger-hover-bg;
+            color: $btn--danger-hover-text;
+        }
+    }
+}

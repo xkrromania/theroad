@@ -1,13 +1,13 @@
 {
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        }
-    },
-    "ignorePatterns": ["node_modules/", "app/node_modules"],
-    "rules": {
-        "semi": "error"
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
     }
+  },
+  "ignorePatterns": ["node_modules/", "app/node_modules"],
+  "rules": {
+    "semi": "error"
+  }
 }
