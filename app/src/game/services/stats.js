@@ -16,6 +16,8 @@ const STATS = [
     }
 ];
 
+const MAX_OVERALL = 25;
+
 let statsService = {
     get: () => {
         return STATS;
@@ -23,7 +25,7 @@ let statsService = {
     getInitialState: () => {
         let stats = {};
 
-        STATS.forEach((stat) => {
+        STATS.forEach(stat => {
             const key = stat.property;
             stats[key] = 0;
         });
@@ -31,7 +33,16 @@ let statsService = {
         return stats;
     },
     getValues: () => {
-        return STATS.map((stat) => stat.value);
+        return STATS.map(stat => stat.value);
+    },
+    getMaxOverall: () => {
+        return MAX_OVERALL;
+    },
+    getOverall: stats => {
+        return Object.keys(stats).reduce(
+            (sum, key) => sum + parseFloat(stats[key] || 0),
+            0
+        );
     }
 };
 

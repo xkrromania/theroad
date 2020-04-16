@@ -14,7 +14,7 @@ const FormField = ({ label, type, name, value, options, handleChange }) => {
                     name={name}
                     autoComplete="off"
                     min="1"
-                    max="10"
+                    max="23"
                     type="number"
                     value={value}
                     onChange={handleChange}

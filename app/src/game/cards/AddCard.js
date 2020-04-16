@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import typesService from '../services/types';
 import statsService from '../services/stats';
 
@@ -9,55 +9,66 @@ import AddCardForm from './AddCardForm';
 const mapDispatch = { addCard };
 
 const AddCard = ({ addCard }) => {
-  const initialType = typesService.getInitialState();
-  const initialStats = statsService.getInitialState();
+    const initialType = typesService.getInitialState();
+    const initialStats = statsService.getInitialState();
+    const maxOverall = statsService.getMaxOverall();
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [type, setType] = useState(initialType);
-  const [stats, setStats] = useState(initialStats);
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [type, setType] = useState(initialType);
+    const [stats, setStats] = useState(initialStats);
 
-  const onNameChange = e => setName(e.target.value);
-  const onDescriptionChange = e => setDescription(e.target.value);
-  const onStatsChange = e => {
-    const stat = e.target.name;
-    const value = e.target.value;
+    const isStatsSelectionValid = (stat, value) => {
+        const updatedStats = { ...stats, [stat]: value };
+        let overall = statsService.getOverall(updatedStats);
 
-    return setStats(prevState => {
-      return { ...prevState, [stat]: value };
-    });
-  };
-  const onTypeChange = e => setType(e.target.value);
+        return maxOverall >= overall;
+    };
 
-  const onSubmit = e => {
-    e.preventDefault();
-    addCard(name, description, type, stats);
-    setName('');
-    setDescription('');
-    setType(initialType);
-    setStats(initialStats);
-  };
+    const onNameChange = e => setName(e.target.value);
+    const onDescriptionChange = e => setDescription(e.target.value);
+    const onStatsChange = e => {
+        const stat = e.target.name;
+        const value = e.target.value;
 
-  const handles = {
-    name: onNameChange,
-    description: onDescriptionChange,
-    type: onTypeChange,
-    submit: onSubmit,
-    stats: onStatsChange
-  };
+        if (!isStatsSelectionValid(stat, value)) {
+            console.error('Invalid');
+            return;
+        }
+        return setStats(prevState => {
+            return { ...prevState, [stat]: value };
+        });
+    };
+    const onTypeChange = e => setType(e.target.value);
 
-  return (
-    <AddCardForm
-      name={name}
-      description={description}
-      type={type}
-      stats={stats}
-      handles={handles}>
-    </AddCardForm>
-  );
+    const onSubmit = e => {
+        e.preventDefault();
+        addCard(name, description, type, stats);
+        setName('');
+        setDescription('');
+        setType(initialType);
+        setStats(initialStats);
+    };
+
+    const handles = {
+        name: onNameChange,
+        description: onDescriptionChange,
+        type: onTypeChange,
+        submit: onSubmit,
+        stats: onStatsChange
+    };
+
+    return (
+        <AddCardForm
+            name={name}
+            description={description}
+            type={type}
+            stats={stats}
+            handles={handles}></AddCardForm>
+    );
 };
 
 export default connect(
-  null,
-  mapDispatch
+    null,
+    mapDispatch
 )(AddCard);

@@ -5,7 +5,6 @@ import typesService from '../services/types';
 
 const statsOptions = statsService.get();
 const typesOptions = typesService.get();
-
 const Card = ({ name, description, type, stats, removeHandle }) => {
     const selectedType = typesOptions.find(option => option.value === type);
     const cardClass = (
@@ -14,8 +13,9 @@ const Card = ({ name, description, type, stats, removeHandle }) => {
         </div>
     );
 
-    const getStatWidth = (width) => {
-        return `${width * 10}%`;
+    const maxOverall = statsService.getMaxOverall();
+    const getStatWidth = (statValue) => {
+        return `${100 * statValue / maxOverall}%`;
     };
 
     const cardStats = (

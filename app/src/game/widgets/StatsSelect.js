@@ -5,9 +5,14 @@ import PropTypes from 'prop-types';
 
 const StatsSelect = ({ stats, handleChange }) => {
     const statsOptions = statsService.get();
+    const overall = statsService.getOverall(stats);
+    const maxOverall = statsService.getMaxOverall();
 
     return (
         <>
+            <span className="points-remaining">
+                Points remaining: {maxOverall - overall}/{maxOverall}
+            </span>
             {statsOptions.map(stat => (
                 <FormField
                     key={stat.id}

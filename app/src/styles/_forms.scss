@@ -68,6 +68,15 @@ $form__label-color: #686868;
     display: flex;
     flex-direction: row;
 
+    .points-remaining {
+        align-self: flex-start;
+        background: #fff;
+        padding: 1em;
+        flex: 1 1;
+        margin-right: 24px;
+        margin-bottom: 0;
+    }
+
     .form-field {
         align-self: flex-start;
         flex: 1;
