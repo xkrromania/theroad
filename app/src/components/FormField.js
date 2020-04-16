@@ -1,19 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FormField = ({ label, type, placeholder, name, value, options, handleChange }) => {
+const FormField = ({ label, type, name, value, options, handleChange }) => {
     return (
-        <div className="form-field">
+        <div className={`form-field ${ type === 'stat' ? 'form-field--stat': ''}`}>
             <label htmlFor={name} className="label">
                 {label}
             </label>
+            {type === 'stat' && (
+                <input
+                    id={name}
+                    className="input"
+                    name={name}
+                    autoComplete="off"
+                    min="1"
+                    max="10"
+                    type="number"
+                    value={value}
+                    onChange={handleChange}
+                />
+            )}
+
             {type === 'number' && (
                 <input
                     id={name}
                     className="input"
                     name={name}
-                    min="0"
-                    max="100"
                     autoComplete="off"
                     type={type}
                     value={value}
@@ -36,6 +48,7 @@ const FormField = ({ label, type, placeholder, name, value, options, handleChang
                 <textarea
                     className="textarea"
                     id={name}
+                    maxLength = "100"
                     name={name}
                     type={type}
                     value={value}

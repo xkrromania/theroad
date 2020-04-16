@@ -73,6 +73,10 @@ $form__label-color: #686868;
         flex: 1;
         margin-right: 24px;
         margin-bottom: 0;
+
+        &--stat {
+            flex: 0 0 80px;
+        }
     }
 
     .add-btn {

@@ -1,7 +1,7 @@
-$card-background: white;
 $card__name-color: #fefefe;
-$card__stat-bg: #c2c2c2;
-$card__stat-color: #57727C;
+$card__stats--pwr-bg: #7768af;
+$card-bg: white;
+
 
 .card-list {
     margin-top: 8px;
@@ -12,34 +12,122 @@ $card__stat-color: #57727C;
 }
 
 .card {
-    background: $card-background;
+    background: $card-bg;
     box-shadow: inset 0px 0px 0px rgba(18, 26, 49, 0.15), inset 0px 0px 0px rgba(18, 26, 49, 0.15), 5px 5px 0px rgba(55, 84, 170, 0.25), -1px -1px 5px rgba(55, 84, 170, 0.15);
     border-radius: 16px;
     color: $dark-text;
-    width: 200px;
-    height: 324px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: relative;
     text-align: center;
     overflow: hidden;
+    width: 230px;
+
+    &--gkr {
+        background: $goalkeeper-bg;
+        color: $light-text;
+    }
+
+    &--def {
+        background: $defender-bg;
+        color: $dark-text;
+    }
+
+    &--mid {
+        background: $midfielder-bg;
+        color: $light-text;
+    }
+
+    &--atk {
+        background: $attacker-bg;
+        color: $dark-text;
+    }
+
+    .remove-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+    }
 
     &+.card {
         margin-left: 8px;
     }
 
     &__class {
-        background: #4225c0;
-        color: #fefefe;
-        height: 128px;
-        font-size: 2em;
+        padding: 8px;
+        text-transform: uppercase;
+
+        span {
+            font-size: 0.8em;
+            border-radius: 8px;
+            ;
+            padding: 4px 8px;
+        }
     }
 
     &__name {
         font-family: $highlight-font;
-        font-size: 1.5em;
+        font-size: 2em;
+        margin: 8px 0;
     }
 
     &__description {
-        font-size: 1em;
-        color: lighten($dark-text, 5%);
+        flex: 1;
+        font-size: 0.8em;
+        font-style: italic;
+        line-height: 1.2em;
+        max-height: 3.5em;
+        margin: 8px;
+        overflow: hidden;
+        padding: 8px 4px;
+        position: relative;
+    }
+
+    &__stats {
+        display: flex;
+        flex-direction: column;
+        margin: 8px 16px 16px;
+    }
+
+    &__stat {
+        align-items: center;
+        border-radius: 12px;
+        background: #fefefe;
+        display: flex;
+        flex-direction: column;
+        padding: 8px 15px;
+        margin: 8px 0;
+
+        &--abi .stat-bar{
+            background: $ability-bg;
+        }
+
+        &--int .stat-bar{
+            background: $intelligence-bg;
+        }
+
+        &--phy .stat-bar {
+            background: $physical-bg;
+        }
+
+        .stat-value {
+            color: $dark-text;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: $dark-text;
+            text-transform: uppercase;
+            font-size: 0.8em;
+        }
+
+        .stat-bar {
+            border-radius: 16px;
+            display: inline-block;
+            height: 8px;
+            margin: 4px 0;
+        }
     }
 }

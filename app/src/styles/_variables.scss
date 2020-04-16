@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Fira+Sans:ital,wght@0,400;0,700;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400;1,700&family=Yanone+Kaffeesatz:wght@400;700&display=swap');
 
 $dark-text: #252525;
 $light-text: #fff;
-$main-color: #45CB85;
+$main-color: #fefefe;
 $alternative-color: #7768AE;
 $highlight-color: #EAD94C;
 $container-width: 1440px;
 
-$main-font: 'Fira Sans', sans-serif;
-$highlight-font: 'Bangers', cursive;
+$main-font: 'Open Sans', Arial, sans-serif;
+$highlight-font: 'Yanone Kaffeesatz', sans-serif;
 
 $link-color: #2871d1;
 $link-color--hover: lighten($link-color, 10%);

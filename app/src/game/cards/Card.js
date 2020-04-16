@@ -1,22 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import statsService from '../services/stats';
+import typesService from '../services/types';
+
+const statsOptions = statsService.get();
+const typesOptions = typesService.get();
 
 const Card = ({ name, description, type, stats, removeHandle }) => {
-    const cardClass = `card__class card__class--${type}`;
+    const selectedType = typesOptions.find(option => option.value === type);
+    const cardClass = (
+        <div className="card__class">
+            <span>{selectedType.label}</span>
+        </div>
+    );
+
+    const getStatWidth = (width) => {
+        return `${width * 10}%`;
+    };
+
+    const cardStats = (
+        <div className="card__stats">
+            {statsOptions.map(option => (
+                <div
+                    key={option.id}
+                    className={`card__stat card__stat--${option.property}`}>
+                    <span className="stat-value">{stats[option.property]}</span>
+                    <span
+                        className="stat-bar"
+                        style={{ width: getStatWidth(stats[option.property]) }}></span>
+                    <span className="stat-label">{option.label}</span>
+                </div>
+            ))}
+        </div>
+    );
 
     return (
-        <article className="card">
-            <div className={cardClass}></div>
+        <article className={`card card--${type}`}>
+            <button className="btn remove-btn icon" onClick={removeHandle}>
+                x
+            </button>
+            {cardClass}
             <div className="card__name">{name}</div>
             <div className="card__description">{description}</div>
-            <div className="card__stats">
-                {JSON.stringify(stats)}
-            </div>
-            <div className="card__actions">
-                <button className="btn danger" onClick={removeHandle}>
-                    Remove
-                </button>
-            </div>
+            {cardStats}
         </article>
     );
 };

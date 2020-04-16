@@ -4,8 +4,7 @@ $app-heading-font: $main-font;
 $app-body-font: $main-font;
 
 html,
-body,
-p {
+body {
     font-family: $app-body-font;
     font-size: 14px;
 }
@@ -20,7 +19,7 @@ h6 {
 }
 
 h1 {
-    font-size: 54px;
+    font-size: 2em;
     font-weight: 300;
     line-height: 58px;
     margin: 0 0 8px;
@@ -29,7 +28,7 @@ h1 {
 
 p {
     font-family: $app-body-font;
-    font-size: 16px;
+    font-size: 1em;
     line-height: 26px;
     text-indent: 30px;
     margin: 0;
