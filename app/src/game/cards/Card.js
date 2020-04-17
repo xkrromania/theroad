@@ -14,8 +14,8 @@ const Card = ({ name, description, type, stats, removeHandle }) => {
     );
 
     const maxOverall = statsService.getMaxOverall();
-    const getStatWidth = (statValue) => {
-        return `${100 * statValue / maxOverall}%`;
+    const getStatWidth = statValue => {
+        return `${(100 * statValue) / maxOverall}%`;
     };
 
     const cardStats = (
@@ -27,18 +27,24 @@ const Card = ({ name, description, type, stats, removeHandle }) => {
                     <span className="stat-value">{stats[option.property]}</span>
                     <span
                         className="stat-bar"
-                        style={{ width: getStatWidth(stats[option.property]) }}></span>
+                        style={{
+                            width: getStatWidth(stats[option.property])
+                        }}></span>
                     <span className="stat-label">{option.label}</span>
                 </div>
             ))}
         </div>
     );
 
+    const removeIcon = removeHandle && (
+        <button className="btn remove-btn icon" onClick={removeHandle}>
+            x
+        </button>
+    );
+
     return (
         <article className={`card card--${type}`}>
-            <button className="btn remove-btn icon" onClick={removeHandle}>
-                x
-            </button>
+            {removeIcon}
             {cardClass}
             <div className="card__name">{name}</div>
             <div className="card__description">{description}</div>
@@ -52,7 +58,7 @@ Card.propTypes = {
     description: PropTypes.string,
     type: PropTypes.string,
     stats: PropTypes.object.isRequired,
-    removeHandle: PropTypes.func.isRequired
+    removeHandle: PropTypes.func
 };
 
 export default Card;

@@ -26,22 +26,22 @@ $card-bg: white;
 
     &--gkr {
         background: $goalkeeper-bg;
-        color: $light-text;
+        color: $dark-text;
     }
 
     &--def {
         background: $defender-bg;
-        color: $dark-text;
+        color: $light-text;
     }
 
     &--mid {
         background: $midfielder-bg;
-        color: $light-text;
+        color: $dark-text;
     }
 
     &--atk {
         background: $attacker-bg;
-        color: $dark-text;
+        color: $light-text;
     }
 
     .remove-btn {
@@ -99,11 +99,11 @@ $card-bg: white;
         padding: 8px 15px;
         margin: 8px 0;
 
-        &--abi .stat-bar{
+        &--abi .stat-bar {
             background: $ability-bg;
         }
 
-        &--int .stat-bar{
+        &--int .stat-bar {
             background: $intelligence-bg;
         }
 

@@ -5,6 +5,12 @@ $btn--default-hover-bg: #b6c3df;
 $btn--default-hover-text: $dark-text;
 $btn--default-border: #494949;
 
+$btn--primary-bg: #313131;
+$btn--primary-text: $light-text;
+$btn--primary-hover-bg: lighten($btn--primary-bg, 5%);
+$btn--primary-hover-text: $light-text;
+$btn--primary-border: darken($btn--primary-bg, 5%);
+
 $btn--danger-bg: #ba324f;
 $btn--danger-text: $light-text;
 $btn--danger-hover-bg: darken($btn--danger-bg, 5%);
@@ -50,6 +56,18 @@ $btn--icon-border: lighten($btn--icon-bg, 5%);
     &:not(disabled):focus {
         background: $btn--default-hover-bg;
         color: $btn--default-hover-text;
+    }
+
+    &.primary {
+        background: $btn--primary-bg;
+        border-color: $btn--primary-border;
+        color: $btn--primary-text;
+
+        &:not(disabled):hover,
+        &:not(disabled):focus {
+            background: $btn--primary-hover-bg;
+            color: $btn--primary-hover-text;
+        }
     }
 
     &.success {

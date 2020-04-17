@@ -1,0 +1,22 @@
+@keyframes jump {
+    0% { transform: translate(-50%, -50%) }
+    50% { transform: translate(-50%, -90%) }
+    100% { transform: translate(-50%, -50%) }
+}
+
+.alert {
+    padding: 16px 8px;
+    box-shadow: 0 0 15px 0 rgba(#000, 0.35);
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1em;
+    animation: jump 1.2s infinite;
+
+    &--error {
+        background: #b90a0a;
+        border: 1px solid #840d0d;
+        color: $light-text;
+    }
+}

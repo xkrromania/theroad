@@ -17,6 +17,11 @@ const AddCard = ({ addCard }) => {
     const [description, setDescription] = useState('');
     const [type, setType] = useState(initialType);
     const [stats, setStats] = useState(initialStats);
+    const [error, setError] = useState('');
+
+    const resetError = () => {
+        setError('');
+    };
 
     const isStatsSelectionValid = (stat, value) => {
         const updatedStats = { ...stats, [stat]: value };
@@ -31,10 +36,11 @@ const AddCard = ({ addCard }) => {
         const stat = e.target.name;
         const value = e.target.value;
 
+        resetError();
         if (!isStatsSelectionValid(stat, value)) {
-            console.error('Invalid');
-            return;
+            return setError('The points are limited to 25. Spend them wisely.');
         }
+
         return setStats(prevState => {
             return { ...prevState, [stat]: value };
         });
@@ -64,6 +70,7 @@ const AddCard = ({ addCard }) => {
             description={description}
             type={type}
             stats={stats}
+            error={error}
             handles={handles}></AddCardForm>
     );
 };
