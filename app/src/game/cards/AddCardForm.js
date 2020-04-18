@@ -4,7 +4,7 @@ import FormField from '../../components/FormField';
 import TypeSelect from '../widgets/TypeSelect';
 import StatsSelect from '../widgets/StatsSelect';
 
-const AddCardForm = ({ name, description, type, stats, error, handles }) => {
+const AddCardForm = ({ name, type, stats, error, handles }) => {
     const isDisabled = name.length === 0 || type.length === 0;
 
     return (
@@ -22,12 +22,6 @@ const AddCardForm = ({ name, description, type, stats, error, handles }) => {
                 <StatsSelect
                     stats={stats}
                     handleChange={handles.stats}></StatsSelect>
-                <FormField
-                    name="description"
-                    type="textarea"
-                    label="Description"
-                    value={description}
-                    handleChange={handles.description}></FormField>
                 <button
                     className="btn success add-btn"
                     type="submit"
@@ -44,7 +38,6 @@ const AddCardForm = ({ name, description, type, stats, error, handles }) => {
 
 AddCardForm.propTypes = {
     name: PropTypes.string,
-    description: PropTypes.string,
     type: PropTypes.string,
     stats: PropTypes.object,
     error: PropTypes.string,

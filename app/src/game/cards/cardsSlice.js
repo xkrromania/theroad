@@ -8,14 +8,13 @@ const cardsSlice = createSlice({
     reducers: {
         addCard: {
             reducer(state, action) {
-                const { id, name, description, type, stats } = action.payload;
-                state.push({ id, name, description, type, stats });
+                const { id, name, type, stats } = action.payload;
+                state.push({ id, name, type, stats });
             },
-            prepare(name, description, type, stats) {
+            prepare(name, type, stats) {
                 return {
                     payload: {
                         name,
-                        description,
                         type,
                         stats,
                         id: nextTodoId++

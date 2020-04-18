@@ -1,8 +1,31 @@
 @import 'game-variables';
 @import 'cards';
+@import 'match';
 
 .game-view {
     font-family: $game-font;
     padding: 8px 24px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-menu {
+    align-items: center;
+    color: $light-text;
+    display: flex;
+    direction: row;
+    margin-bottom: 8px;
+    padding: 8px;
+
+    > * + * {
+        margin-left: 8px;
+    }
+
+    .scoreboard {
+        flex: 1.2;
+        font-weight: 900;
+        color: $light-text;
+    }
 }

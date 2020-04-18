@@ -5,7 +5,7 @@ import typesService from '../services/types';
 
 const statsOptions = statsService.get();
 const typesOptions = typesService.get();
-const Card = ({ name, description, type, stats, removeHandle }) => {
+const Card = ({ name, type, stats, removeHandle }) => {
     const selectedType = typesOptions.find(option => option.value === type);
     const cardClass = (
         <div className="card__class">
@@ -37,7 +37,7 @@ const Card = ({ name, description, type, stats, removeHandle }) => {
     );
 
     const removeIcon = removeHandle && (
-        <button className="btn remove-btn icon" onClick={removeHandle}>
+        <button className="btn remove-btn" onClick={removeHandle}>
             x
         </button>
     );
@@ -47,7 +47,6 @@ const Card = ({ name, description, type, stats, removeHandle }) => {
             {removeIcon}
             {cardClass}
             <div className="card__name">{name}</div>
-            <div className="card__description">{description}</div>
             {cardStats}
         </article>
     );
@@ -55,7 +54,6 @@ const Card = ({ name, description, type, stats, removeHandle }) => {
 
 Card.propTypes = {
     name: PropTypes.string,
-    description: PropTypes.string,
     type: PropTypes.string,
     stats: PropTypes.object.isRequired,
     removeHandle: PropTypes.func

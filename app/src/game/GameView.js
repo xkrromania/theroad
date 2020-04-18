@@ -13,6 +13,7 @@ class GameView extends React.Component {
     }
 
     startMatch(cards) {
+        matchService.resetState();
         matchService.setCardsForTeam(cards, 'home');
         matchService.setCardsForTeam(gameService.getBasicTeam(), 'away');
         this.setState({
@@ -21,8 +22,8 @@ class GameView extends React.Component {
     }
 
     stopMatch() {
-        matchService.setCardsForTeam([], 'home');
-        matchService.setCardsForTeam([], 'away');
+        matchService.clearCardsForTeam('home');
+        matchService.clearCardsForTeam('away');
         this.setState({
             isMatchOn: false
         });
@@ -37,7 +38,6 @@ class GameView extends React.Component {
 
         return (
             <section className="game-view">
-                {isMatchOn ? 'isOn' : 'isOff'}
                 {!isMatchOn && <CardSelection handles={handles} />}
                 {isMatchOn && <Match handles={handles} />}
             </section>

@@ -14,7 +14,6 @@ const AddCard = ({ addCard }) => {
     const maxOverall = statsService.getMaxOverall();
 
     const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
     const [type, setType] = useState(initialType);
     const [stats, setStats] = useState(initialStats);
     const [error, setError] = useState('');
@@ -31,7 +30,6 @@ const AddCard = ({ addCard }) => {
     };
 
     const onNameChange = e => setName(e.target.value);
-    const onDescriptionChange = e => setDescription(e.target.value);
     const onStatsChange = e => {
         const stat = e.target.name;
         const value = e.target.value;
@@ -49,16 +47,14 @@ const AddCard = ({ addCard }) => {
 
     const onSubmit = e => {
         e.preventDefault();
-        addCard(name, description, type, stats);
+        addCard(name, type, stats);
         setName('');
-        setDescription('');
         setType(initialType);
         setStats(initialStats);
     };
 
     const handles = {
         name: onNameChange,
-        description: onDescriptionChange,
         type: onTypeChange,
         submit: onSubmit,
         stats: onStatsChange
@@ -67,7 +63,6 @@ const AddCard = ({ addCard }) => {
     return (
         <AddCardForm
             name={name}
-            description={description}
             type={type}
             stats={stats}
             error={error}

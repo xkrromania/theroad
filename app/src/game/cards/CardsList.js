@@ -9,7 +9,6 @@ const CardsList = ({ cards, removeHandle }) => {
                 <Card
                     key={card.id}
                     name={card.name}
-                    description={card.description}
                     type={card.type}
                     stats={card.stats}
                     removeHandle={() => removeHandle(card.id)}></Card>

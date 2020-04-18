@@ -1,0 +1,112 @@
+.player-card {
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    justify-content: center;
+    min-width: 150px;
+    padding: 8px;
+    transform: scale(0.9);
+
+    &+.player-card {
+        margin-left: 8px;
+    }
+
+    &--selectable {
+        cursor: pointer;
+    }
+
+    &--selected {
+        animation: jump-relative 2s infinite;
+        border-bottom: 3px solid $highlight-color;
+        border-top: 3px solid $highlight-color;
+    }
+    &--gkr {
+        background: $goalkeeper-bg;
+        color: $dark-text;
+    }
+
+    &--def {
+        background: $defender-bg;
+        color: $light-text;
+    }
+
+    &--mid {
+        background: $midfielder-bg;
+        color: $dark-text;
+    }
+
+    &--atk {
+        background: $attacker-bg;
+        color: $light-text;
+    }
+
+    &__class {
+        padding: 8px;
+        text-transform: uppercase;
+
+        span {
+            font-size: 0.8em;
+            border-radius: 8px;
+            ;
+            padding: 4px 8px;
+        }
+    }
+
+    &__name {
+        font-family: $highlight-font;
+        font-size: 2em;
+        margin: 8px 0;
+    }
+
+    &__stat {
+        align-items: center;
+        border-radius: 12px;
+        background: #fefefe;
+        display: flex;
+        align-content: space-between;
+        justify-content: space-between;
+        flex-direction: row;
+        margin: 8px auto;
+        width: 80%;
+        padding: 4px 8px;
+
+        .stat-value {
+            border-radius: 50%;
+            color: $light-text;
+            display: inline-block;
+            font-size: 1.5em;
+            font-weight: bold;
+            height: 24px;
+            padding: 4px;
+            text-align: center;
+            width: 24px;
+
+            &--abi {
+                background: $ability-bg;
+            }
+
+            &--int {
+                background: $intelligence-bg;
+            }
+
+            &--phy {
+                background: $physical-bg;
+            }
+        }
+
+        .stat-label {
+            color: $dark-text;
+            text-transform: uppercase;
+            font-size: 0.8em;
+        }
+
+        .stat-bar {
+            border-radius: 16px;
+            display: inline-block;
+            height: 8px;
+            margin: 4px 0;
+        }
+    }
+}

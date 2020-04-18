@@ -5,7 +5,7 @@ $btn--default-hover-bg: #b6c3df;
 $btn--default-hover-text: $dark-text;
 $btn--default-border: #494949;
 
-$btn--primary-bg: #313131;
+$btn--primary-bg: $main-color;
 $btn--primary-text: $light-text;
 $btn--primary-hover-bg: lighten($btn--primary-bg, 5%);
 $btn--primary-hover-text: $light-text;
@@ -22,12 +22,6 @@ $btn--success-text: $light-text;
 $btn--success-hover-bg: darken($btn--success-bg, 5%);
 $btn--success-hover-text: $light-text;
 $btn--success-border: darken($btn--success-bg, 5%);
-
-$btn--icon-bg: #0f0f0f;
-$btn--icon-text: $light-text;
-$btn--icon-hover-bg: lighten($btn--icon-bg, 5%);
-$btn--icon-hover-text: $light-text;
-$btn--icon-border: lighten($btn--icon-bg, 5%);
 
 .btn,
 .btn:active {
@@ -91,28 +85,6 @@ $btn--icon-border: lighten($btn--icon-bg, 5%);
         &:not(disabled):focus {
             background: $btn--danger-hover-bg;
             color: $btn--danger-hover-text;
-        }
-    }
-
-    &.icon {
-        border-radius: 50%;
-        display: inline-block;
-        font-size: 10px;
-        height: 24px;
-        line-height: 10px;
-        margin: 0 0 8px;
-        padding: 0;
-        text-align: center;
-        width: 24px;
-
-        background: $btn--icon-bg;
-        border-color: $btn--icon-border;
-        color: $btn--icon-text;
-
-        &:not(disabled):hover,
-        &:not(disabled):focus {
-            background: $btn--icon-hover-bg;
-            color: $btn--icon-text;
         }
     }
 }
