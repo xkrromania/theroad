@@ -1,38 +1,61 @@
+import utilsService from './utils';
+import NAMES from './constants/names';
+import SURNAMES from './constants/surnames';
+
 const MAX_PLAYERS = 5;
-const basicTeam = [{
-    id: 0,
-    name: 'Iker Casillas',
-    stats: { abi: '10', int: '10', phy: '5' },
-    type: 'gkr'
-},{
-    id: 1,
-    name: 'Sergio Ramos',
-    stats: { abi: '10', int: '10', phy: '5' },
-    type: 'def'
-},{
-    id: 2,
-    name: 'Andreea Pirlo',
-    stats: { abi: '11', int: '12', phy: '2' },
-    type: 'mid'
-},{
-    id: 3,
-    name: 'Ngolo Kante',
-    stats: { abi: '4', int: '10', phy: '11' },
-    type: 'mid'
-},{
-    id: 4,
-    name: 'Fernando Torres',
-    stats: { abi: '8', int: '10', phy: '7' },
-    type: 'atk'
-}];
+const getPlayerName = () => {
+    let name = NAMES[utilsService.getRandom(0, NAMES.length - 1)],
+        surname = SURNAMES[utilsService.getRandom(0, SURNAMES.length - 1)];
+
+    return `${name} ${surname}`;
+};
+
+/**
+ * Generate a team
+ *
+ * @param {minAttr} minAttr
+ * @param {maxAttr} maxAttr
+ */
+const generateTeam = (minAttr, maxAttr) => {
+    minAttr = minAttr | 5;
+    maxAttr = maxAttr | 15;
+
+    let team = [];
+    let possibleTypes = ['gkr'];
+    let outfieldPlayers = MAX_PLAYERS - 1;
+
+    for (let i = 1; i < outfieldPlayers + 1; i++) {
+        if (i <= outfieldPlayers / 2) {
+            possibleTypes.push('def');
+        } else {
+            possibleTypes.push('atk');
+        }
+    }
+
+    for (let i = 0; i < MAX_PLAYERS; i++) {
+        let playerCard = {
+            id: i,
+            name: getPlayerName(),
+            stats: {
+                abi: utilsService.getRandom(minAttr, maxAttr),
+                int: utilsService.getRandom(minAttr, maxAttr),
+                phy: utilsService.getRandom(minAttr, maxAttr)
+            },
+            type: possibleTypes[i]
+        };
+
+        team.push(playerCard);
+    }
+
+    return team;
+};
 
 const gameService = {
     getMaxPlayers: () => {
         return MAX_PLAYERS;
     },
-    getBasicTeam: () => {
-        return basicTeam;
-    }
+    generateTeam: generateTeam,
+    getOpponentTeam: generateTeam
 };
 
 export default gameService;

@@ -16,7 +16,7 @@ const STATS = [
     }
 ];
 
-const MAX_OVERALL = 25;
+const MAX_OVERALL = 40;
 
 let statsService = {
     get: () => {
@@ -33,7 +33,7 @@ let statsService = {
         return stats;
     },
     getValues: () => {
-        return STATS.map(stat => stat.value);
+        return STATS.map(stat => stat.property);
     },
     getMaxOverall: () => {
         return MAX_OVERALL;

@@ -3,7 +3,7 @@ import PlayerCard from './PlayerCard';
 
 const Team = ({ team, cards, handleSelect }) => {
     return (
-        <section className="card-list">
+        <section className={`card-list card-list--${team}`}>
             {cards.map(card => (
                 <PlayerCard
                     key={card.id}

@@ -2,8 +2,10 @@
 
 $dark-text: #252525;
 $light-text: #fff;
-$main-color: #7768AE;
-$highlight-color: #EAD94C;
+$app-bg: linear-gradient(120deg, rgba(50, 150, 100, 0.2) , rgba(0, 0, 100, 0) );
+$app-bg-fallback: #eee;
+$main-color: #3a7bd5;
+$highlight-color: #ffed4b;
 $container-width: 1440px;
 
 $main-font: 'Open Sans', Arial, sans-serif;

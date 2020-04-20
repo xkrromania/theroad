@@ -18,7 +18,7 @@ const CardSelectionContainer = ({
         <div className="game-menu">
             <button
                 className="btn primary"
-                onClick={() => setBasicTeam(gameService.getBasicTeam())}>
+                onClick={() => setBasicTeam(gameService.generateTeam())}>
                 Generate Team
             </button>
             {cards.length === maxPlayers && (

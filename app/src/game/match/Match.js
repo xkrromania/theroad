@@ -1,6 +1,7 @@
 import React from 'react';
 import Team from './Team';
 import matchService from '../services/match';
+import MatchMenu from './MatchMenu';
 
 class Match extends React.Component {
     constructor(props) {
@@ -8,12 +9,13 @@ class Match extends React.Component {
         this.state = { ...matchService.state, error: '' };
 
         this.selectCard = this.selectCard.bind(this);
-        this.incrementGameStep = this.incrementGameStep.bind(this);
+        this.playTurn = this.playTurn.bind(this);
     }
 
     selectCard(team, cardId) {
         this.setState(prevState => ({
             ...prevState,
+            error: '',
             cards: {
                 ...prevState.cards,
                 [team]: prevState.cards[team].map(card => ({
@@ -26,13 +28,18 @@ class Match extends React.Component {
         return matchService.selectCardForTeam(team, cardId);
     }
 
-    incrementGameStep() {
+    playTurn() {
         matchService
-            .incrementGameStep()
+            .playTurn()
             .then(response => {
                 this.setState({
                     error: '',
-                    gameStep: this.state.gameStep + 1
+                    cards: { ...this.state.cards, ...response.cards },
+                    isMatchEnded: response.isMatchEnded,
+                    isUserAttacking: response.isUserAttacking,
+                    minute: response.minute,
+                    score: response.score,
+                    timeline: response.timeline
                 });
             })
             .catch(response =>
@@ -45,36 +52,59 @@ class Match extends React.Component {
     }
 
     render() {
-        const { gameStep, score, cards, error } = this.state;
+        const {
+            cards,
+            error,
+            isMatchEnded,
+            isUserAttacking,
+            minute,
+            score,
+            timeline
+        } = this.state;
         const { handles } = this.props;
-        const gameMenu = (
-            <div className="game-menu">
-                <button
-                    className="btn success"
-                    onClick={this.incrementGameStep}>
-                    {gameStep} Next
-                </button>
-                <button className="btn primary" onClick={() => handles.stop()}>
-                    End Game
-                </button>
-                <span className="scoreboard">
-                    {score.home} - {score.away}
-                </span>
+
+        const timelineBar = (
+            <div className="timeline">
+                {timeline.map(entry => {
+                    return (
+                        <span
+                            key={entry.minute}
+                            className={`timeline__entry ${
+                                entry.isUserAttacking
+                                    ? 'timeline__entry--attacking'
+                                    : ''
+                            }`}>
+                            <span className="minute">{entry.minute}'</span>
+                            <span className="text">{entry.text}</span>
+                        </span>
+                    );
+                })}
             </div>
         );
+
+        const menuActions = {
+            next: this.playTurn,
+            stop: () => handles.stop()
+        };
+
         return (
-            <>
+            <div className="match-board">
+                <MatchMenu
+                    score={score}
+                    minute={minute}
+                    isMatchEnded={isMatchEnded}
+                    isUserAttacking={isUserAttacking}
+                    actions={menuActions}></MatchMenu>
                 {error.length > 0 && (
                     <div className="alert alert--error">{error}</div>
                 )}
-                {gameMenu}
                 <Team
-                    team="home"
-                    cards={cards.home}
+                    team="user"
+                    cards={cards.user}
                     handleSelect={this.selectCard}></Team>
-                <h1> VS </h1>
-                <Team team="away" cards={cards.away}></Team>
-            </>
+                {timelineBar}
+                <Team team="opponent" cards={cards.opponent}></Team>
+            </div>
         );
     }
 }

@@ -11,11 +11,6 @@ const TYPES = [
     },
     {
         id: 2,
-        label: 'Midfielder',
-        value: 'mid'
-    },
-    {
-        id: 3,
         label: 'Attacker',
         value: 'atk'
     }

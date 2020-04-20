@@ -1,11 +1,10 @@
 $game-font: 'Source Sans Pro', sans-serif;
 // CLASSES
-$goalkeeper-bg: #9BC53D;
+$goalkeeper-bg: #efefef;
 $defender-bg: #29335C;
-$midfielder-bg: #FB8B24;
 $attacker-bg: #C33149;
 
-// STATS
-$ability-bg: #49c03e;
-$intelligence-bg: #4169e1;
-$physical-bg: #774a4a;
+$user-team-bg: #034694;
+$user-team-text: $dark-text;
+$opp-team-bg: #ea2212;
+$opp-team-text: $dark-text;

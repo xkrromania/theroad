@@ -1,112 +1,97 @@
-.player-card {
-    align-items: center;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    display: flex;
-    flex-direction: column;
-    overflow: visible;
-    justify-content: center;
-    min-width: 150px;
-    padding: 8px;
-    transform: scale(0.9);
+@import './player-card';
 
-    &+.player-card {
+.match-menu {
+    background: #fefefe;
+    box-shadow: 9px 7px 40px -6px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    align-items: center;
+    color: $dark-text;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 8px;
+    padding: 8px 16px;
+
+    >*+* {
         margin-left: 8px;
     }
 
-    &--selectable {
-        cursor: pointer;
-    }
-
-    &--selected {
-        animation: jump-relative 2s infinite;
-        border-bottom: 3px solid $highlight-color;
-        border-top: 3px solid $highlight-color;
-    }
-    &--gkr {
-        background: $goalkeeper-bg;
+    .scoreboard {
+        font-weight: 900;
         color: $dark-text;
-    }
+        margin-left: auto;
 
-    &--def {
-        background: $defender-bg;
-        color: $light-text;
-    }
-
-    &--mid {
-        background: $midfielder-bg;
-        color: $dark-text;
-    }
-
-    &--atk {
-        background: $attacker-bg;
-        color: $light-text;
-    }
-
-    &__class {
-        padding: 8px;
-        text-transform: uppercase;
-
-        span {
-            font-size: 0.8em;
-            border-radius: 8px;
-            ;
-            padding: 4px 8px;
+        &__score {
+            border-left: 3px solid $user-team-bg;
+            border-right: 3px solid $opp-team-bg;
+            background: $highlight-color;
+            font-size: 1.2em;
+            padding: 0 4px;
         }
     }
+}
 
-    &__name {
-        font-family: $highlight-font;
-        font-size: 2em;
-        margin: 8px 0;
+.timeline {
+    max-height: 128px;
+    display: flex;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px 8px 0;
+    position: relative;
+    flex-direction: column;
+    min-height: min-content;
+
+
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #F5F5F5;
     }
 
-    &__stat {
-        align-items: center;
-        border-radius: 12px;
-        background: #fefefe;
-        display: flex;
-        align-content: space-between;
-        justify-content: space-between;
-        flex-direction: row;
-        margin: 8px auto;
-        width: 80%;
-        padding: 4px 8px;
+    &::-webkit-scrollbar {
+        width: 6px;
+        background-color: #F5F5F5;
+    }
 
-        .stat-value {
-            border-radius: 50%;
-            color: $light-text;
-            display: inline-block;
+    &::-webkit-scrollbar-thumb {
+        background-color: #000000;
+    }
+
+    &__entry {
+        width: 50%;
+        flex: 1;
+        align-items: center;
+        background: linear-gradient(145deg, $opp-team-bg 10%, #ffffff 10%);
+        color: $opp-team-text;
+        padding: 8px 8px 8px 4%;
+        border-radius: 4px 4px 0 0;
+        display: flex;
+        flex-direction: column;
+
+        &--attacking {
+            margin-left: auto;
+            background: linear-gradient(145deg, $user-team-bg 10%, #ffffff 10%);
+            color: $user-team-text;
+        }
+
+        &+& {
+            margin-top: 16px;
+        }
+
+        .minute {
             font-size: 1.5em;
             font-weight: bold;
-            height: 24px;
-            padding: 4px;
-            text-align: center;
-            width: 24px;
-
-            &--abi {
-                background: $ability-bg;
-            }
-
-            &--int {
-                background: $intelligence-bg;
-            }
-
-            &--phy {
-                background: $physical-bg;
-            }
         }
 
-        .stat-label {
-            color: $dark-text;
-            text-transform: uppercase;
+        .text {
+            text-align: center;
             font-size: 0.8em;
         }
+    }
 
-        .stat-bar {
-            border-radius: 16px;
-            display: inline-block;
-            height: 8px;
-            margin: 4px 0;
-        }
+    .middle-line {
+        background: $highlight-color;
+        position: absolute;
+        top: calc(50% - 1.5px);
+        height: 3px;
+        width: 100%;
     }
 }

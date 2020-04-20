@@ -2,7 +2,6 @@ $card__name-color: #fefefe;
 $card__stats--pwr-bg: #7768af;
 $card-bg: white;
 
-
 .card-list {
     margin-top: 8px;
     padding: 8px;
@@ -12,7 +11,8 @@ $card-bg: white;
 
 .card {
     background: $card-bg;
-    box-shadow: inset 0px 0px 0px rgba(18, 26, 49, 0.15), inset 0px 0px 0px rgba(18, 26, 49, 0.15), 5px 5px 0px rgba(55, 84, 170, 0.25), -1px -1px 5px rgba(55, 84, 170, 0.15);
+    //box-shadow: inset 0px 0px 0px rgba(18, 26, 49, 0.15), inset 0px 0px 0px rgba(18, 26, 49, 0.15), 5px 5px 0px rgba(55, 84, 170, 0.25), -1px -1px 5px rgba(55, 84, 170, 0.15);
+    box-shadow: 9px 7px 40px -6px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
     color: $dark-text;
     display: flex;
@@ -57,18 +57,13 @@ $card-bg: white;
         color: $light-text;
     }
 
-    &--mid {
-        background: $midfielder-bg;
-        color: $dark-text;
-    }
-
     &--atk {
         background: $attacker-bg;
         color: $light-text;
     }
 
     &+.card {
-        margin-left: 8px;
+        margin-left: 16px;
     }
 
     &__class {
@@ -104,18 +99,6 @@ $card-bg: white;
         padding: 8px 15px;
         margin: 8px 0;
 
-        &--abi .stat-bar {
-            background: $ability-bg;
-        }
-
-        &--int .stat-bar {
-            background: $intelligence-bg;
-        }
-
-        &--phy .stat-bar {
-            background: $physical-bg;
-        }
-
         .stat-value {
             color: $dark-text;
             font-size: 1.5em;
@@ -129,6 +112,7 @@ $card-bg: white;
         }
 
         .stat-bar {
+            background: $dark-text;
             border-radius: 16px;
             display: inline-block;
             height: 8px;

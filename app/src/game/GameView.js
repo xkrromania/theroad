@@ -14,16 +14,15 @@ class GameView extends React.Component {
 
     startMatch(cards) {
         matchService.resetState();
-        matchService.setCardsForTeam(cards, 'home');
-        matchService.setCardsForTeam(gameService.getBasicTeam(), 'away');
+        matchService.setCardsForTeam(cards, 'user');
+        matchService.setCardsForTeam(gameService.getOpponentTeam(), 'opponent');
         this.setState({
             isMatchOn: true
         });
     }
 
     stopMatch() {
-        matchService.clearCardsForTeam('home');
-        matchService.clearCardsForTeam('away');
+        matchService.resetState();
         this.setState({
             isMatchOn: false
         });

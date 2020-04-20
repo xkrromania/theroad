@@ -23,19 +23,24 @@ const PlayerCard = ({ card, team, handleSelect }) => {
         return handleSelect(team, card.id);
     };
     const cardClass = (
-        <div className="card__class">
+        <div className="player-card__class">
             <span>{selectedType.label}</span>
         </div>
     );
-    const cardStats = statsOptions.map(option => (
-        <div key={option.id} className="player-card__stat">
-            <span className="stat-label">{option.label}</span>
-            <span className={`stat-value stat-value--${option.property}`}>
-                {!card.hasHiddenStats && card.stats[option.property]}
-                {card.hasHiddenStats && '?'}
-            </span>
+    const cardStats = (
+        <div className="player-card__stats">
+            {statsOptions.map(option => (
+                <div key={option.id} className={`player-card__stat player-card__stat--${option.property}`}>
+                    <span className="stat-label">{option.property}</span>
+                    <span
+                        className="stat-value">
+                        {!card.hasHiddenStats && card.stats[option.property]}
+                        {card.hasHiddenStats && '?'}
+                    </span>
+                </div>
+            ))}
         </div>
-    ));
+    );
 
     return (
         <div className={className} onClick={selectCard}>
