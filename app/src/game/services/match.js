@@ -70,25 +70,31 @@ const addTimelineEntry = text => {
  */
 const getTypeDeficit = (type, isAttacking) => {
     if (isAttacking) {
+        // Attack with attacker (100% attributes)
         if (type === 'atk') {
             return 1;
         }
 
+        // Attack with defender (50% attributes)
         if (type === 'def') {
-            return 2;
+            return .5;
         }
 
-        return 3;
+        // Attack with goalkeeper (10% attributes)
+        return .1;
     } else {
+        // Defend with attacker (10% attributes)
         if (type === 'atk') {
-            return 2;
+            return .1;
         }
 
+        // Defend with defender (100%)
         if (type === 'def') {
             return 1;
         }
 
-        return 1;
+        // Defend with goalkeeper (90%)
+        return .9;
     }
 };
 
@@ -108,17 +114,17 @@ const getCardLevelForScenario = (stats, type, scenario, isAttacking) => {
         case 'set_piece':
             return {
                 name: 'int',
-                value: parseInt(stats.int / typeDeficit)
+                value: parseInt(stats.int * typeDeficit)
             };
         case 'cross':
             return {
                 name: 'phy',
-                value: parseInt(stats.phy) // Physical stats are the same for each pos.
+                value: parseInt(stats.phy * typeDeficit) // Physical stats are the same for each pos.
             };
         default:
             return {
                 name: 'abi',
-                value: parseInt(stats.abi / typeDeficit)
+                value: parseInt(stats.abi * typeDeficit)
             };
     }
 };

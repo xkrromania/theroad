@@ -19,8 +19,11 @@ const SCENARIOS = {
 const getTextByScenario = (scenario, offCard, defCard, isGoal, difference) => {
     const isDefCardGoalkeeper = defCard.type === 'gkr';
     let text = '';
+    let statLost = '';
+
     switch (scenario) {
         case 'set_piece':
+            statLost = 'INT';
             if (isGoal) {
                 text = `Goal scored by ${offCard.name}! `;
                 text += isDefCardGoalkeeper
@@ -35,6 +38,7 @@ const getTextByScenario = (scenario, offCard, defCard, isGoal, difference) => {
             }
             break;
         case 'cross':
+            statLost = 'PHY';
             if (isGoal) {
                 text = `${offCard.name} heads the ball into the net `;
                 text += isDefCardGoalkeeper
@@ -48,6 +52,7 @@ const getTextByScenario = (scenario, offCard, defCard, isGoal, difference) => {
             }
             break;
         default:
+            statLost = 'ABI';
             text = `${offCard.name} `;
             if (isGoal) {
                 text += isDefCardGoalkeeper
@@ -62,7 +67,11 @@ const getTextByScenario = (scenario, offCard, defCard, isGoal, difference) => {
             break;
     }
 
-    text += ` (who lost ${Math.abs(difference)}SP).`;
+    if (difference > 0) {
+        text += ` (who lost ${Math.abs(difference)} ${statLost}).`;
+    } else {
+        text += '.';
+    }
 
     return text;
 };
