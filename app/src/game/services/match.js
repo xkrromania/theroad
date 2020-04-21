@@ -4,6 +4,7 @@ import scenariosService from './scenarios';
 const TIMELINE_MIN = 5;
 const TIMELINE_MAX = 10;
 
+let timelineEntryId = 0;
 let state = {
     cards: {
         user: [],
@@ -50,8 +51,9 @@ const addTimelineEntry = text => {
         state.minute = endMinute;
         state.isMatchEnded = true;
     }
-
+    timelineEntryId++;
     state.timeline.unshift({
+        id: timelineEntryId,
         minute: state.minute,
         text: text,
         isUserAttacking: state.isUserAttacking
@@ -154,8 +156,7 @@ const simulateEvent = (offCard, defCard, offTeam) => {
         scenario,
         false
     );
-    console.log(JSON.stringify(offStat));
-    console.log(JSON.stringify(defStat));
+
     let timelineText = '';
     let isGoal = false;
     let difference = offStat.value - defStat.value;
@@ -197,6 +198,7 @@ const simulateTurn = () => {
 
     if (state.timeline.length === 0) {
         state.timeline.unshift({
+            id: timelineEntryId,
             minute: state.minute,
             text: 'Game started.',
             isUserAttacking: state.isUserAttacking
@@ -289,11 +291,14 @@ const matchService = {
                 simulateTurn();
                 state.isUserAttacking = !state.isUserAttacking;
                 if (state.isMatchEnded) {
+                    timelineEntryId++;
                     state.timeline.unshift({
+                        id: timelineEntryId,
                         minute: state.minute,
                         text: 'Game has ended.',
                         isUserAttacking: state.isUserAttacking
                     });
+                    timelineEntryId = 0;
                 }
                 return resolve({
                     cards: state.cards,

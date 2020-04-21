@@ -17,7 +17,7 @@ const MatchMenu = ({
                 {isUserAttacking ? 'Attack' : 'Defend'}
             </button>
         )}
-        {isMatchEnded && <span>The game has ended.</span>}
+        {isMatchEnded && <span className="alert alert--success">The game has ended.</span>}
         <button className="btn primary" onClick={actions.stop}>
             Quit Game
         </button>

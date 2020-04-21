@@ -68,7 +68,7 @@ class Match extends React.Component {
                 {timeline.map(entry => {
                     return (
                         <span
-                            key={entry.minute}
+                            key={entry.id}
                             className={`timeline__entry ${
                                 entry.isUserAttacking
                                     ? 'timeline__entry--attacking'

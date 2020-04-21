@@ -15,4 +15,10 @@
         border: 1px solid #840d0d;
         color: $light-text;
     }
+
+    &--success {
+        background: #2d9948;
+        border: 1px solid #288b41;
+        color: $light-text;
+    }
 }
