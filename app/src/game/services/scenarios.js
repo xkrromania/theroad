@@ -12,11 +12,11 @@ const SCENARIOS = {
  * @param {object} offCard
  * @param {object} defCard
  * @param {boolean} isGoal
- * @param {number} difference
+ * @param {number} lostStatPoints
  *
  * @returns {string}
  */
-const getTextByScenario = (scenario, offCard, defCard, isGoal, difference) => {
+const getTextByScenario = (scenario, offCard, defCard, isGoal, lostStatPoints) => {
     const isDefCardGoalkeeper = defCard.type === 'gkr';
     let text = '';
     let statLost = '';
@@ -53,8 +53,8 @@ const getTextByScenario = (scenario, offCard, defCard, isGoal, difference) => {
             break;
         default:
             statLost = 'ABI';
-            text = `${offCard.name} `;
             if (isGoal) {
+                text = `${offCard.name} `;
                 text += 'Goal! ';
                 text += isDefCardGoalkeeper
                     ? ` shoots on goal and the attempt can't be saved by ${defCard.name}`
@@ -62,17 +62,13 @@ const getTextByScenario = (scenario, offCard, defCard, isGoal, difference) => {
             } else {
                 text = `${defCard.name} `;
                 text += isDefCardGoalkeeper
-                    ? ` saves the attempt from ${offCard.name}`
+                    ? ` saves the shot from ${offCard.name}`
                     : ` takes the ball from ${offCard.name}`;
             }
             break;
     }
 
-    if (Math.abs((difference) > 0)) {
-        text += ` (who lost ${Math.abs(difference)} ${statLost}).`;
-    } else {
-        text += '.';
-    }
+    text += ` (who lost ${lostStatPoints} ${statLost}).`;
 
     return text;
 };

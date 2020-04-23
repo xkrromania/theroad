@@ -1,33 +1,27 @@
 /*** BUTTONS ***/
-$btn--default-bg: #d3d3d3;
-$btn--default-text: $dark-text;
-$btn--default-hover-bg: #b6c3df;
-$btn--default-hover-text: $dark-text;
-$btn--default-border: #494949;
+$btn--default: #183a6d;
+$btn--default-text: $light-text;
+$btn--primary: $main-color;
+$btn--danger: #ba324f;
+$btn--success: #119da4;
 
-$btn--primary-bg: $main-color;
-$btn--primary-text: $light-text;
-$btn--primary-hover-bg: lighten($btn--primary-bg, 5%);
-$btn--primary-hover-text: $light-text;
-$btn--primary-border: darken($btn--primary-bg, 5%);
+@mixin button-bg($bg) {
+    background: $bg;
 
-$btn--danger-bg: #ba324f;
-$btn--danger-text: $light-text;
-$btn--danger-hover-bg: darken($btn--danger-bg, 5%);
-$btn--danger-hover-text: $light-text;
-$btn--danger-border: darken($btn--danger-bg, 5%);
+    &:hover {
+        background: darken($bg, 8%);
+        transition: all 0.3s ease;
+    }
 
-$btn--success-bg: #119da4;
-$btn--success-text: $light-text;
-$btn--success-hover-bg: darken($btn--success-bg, 5%);
-$btn--success-hover-text: $light-text;
-$btn--success-border: darken($btn--success-bg, 5%);
+    &:active {
+        background: darken($bg, 25%);
+    }
+}
 
 .btn,
 .btn:active {
     appearance: none;
-    background: $btn--default-bg;
-    border: 1px solid $btn--default-border;
+    background: $btn--default;
     border-radius: 8px;
     box-shadow: 9px 7px 40px -6px rgba(0, 0, 0, 0.25);
     color: $btn--default-text;
@@ -46,45 +40,15 @@ $btn--success-border: darken($btn--success-bg, 5%);
     text-transform: uppercase;
     -webkit-font-smoothing: antialiased;
 
-    &:not(disabled):hover,
-    &:not(disabled):focus {
-        background: $btn--default-hover-bg;
-        color: $btn--default-hover-text;
-    }
-
-    &.primary, &.primary:active, &.primary:visited {
-        background: linear-gradient(to bottom, $btn--primary-bg 0%, darken($btn--primary-bg, 5%) 100%);
-        border-color: $btn--primary-border;
-        color: $btn--primary-text;
-
-        &:not(disabled):hover,
-        &:not(disabled):focus {
-            background: $btn--primary-hover-bg;
-            color: $btn--primary-hover-text;
-        }
+    &.primary {
+        @include button-bg($btn--primary);
     }
 
     &.success {
-        background: $btn--success-bg;
-        border-color: $btn--success-border;
-        color: $btn--success-text;
-
-        &:not(disabled):hover,
-        &:not(disabled):focus {
-            background: $btn--success-hover-bg;
-            color: $btn--success-hover-text;
-        }
+        @include button-bg($btn--success);
     }
 
-    &.danger {
-        background: $btn--danger-bg;
-        border-color: $btn--danger-border;
-        color: $btn--danger-text;
-
-        &:not(disabled):hover,
-        &:not(disabled):focus {
-            background: $btn--danger-hover-bg;
-            color: $btn--danger-hover-text;
-        }
+    &.error {
+        @include button-bg($btn--danger);
     }
 }

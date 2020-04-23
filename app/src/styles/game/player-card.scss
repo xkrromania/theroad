@@ -21,7 +21,7 @@
     }
 
     &--selected {
-        animation: jump-relative 2s infinite;
+        animation: jumpRelative 2s infinite;
         border-top: 4px solid $highlight-color;
         border-bottom: 4px solid $highlight-color;
     }
@@ -101,6 +101,10 @@
             padding: 4px;
             text-align: center;
             width: 24px;
+
+            &--changed {
+                animation: shakeStat 1.5s linear infinite;
+            }
         }
 
         .stat-label {

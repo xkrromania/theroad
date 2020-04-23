@@ -30,10 +30,16 @@ const PlayerCard = ({ card, team, handleSelect }) => {
     const cardStats = (
         <div className="player-card__stats">
             {statsOptions.map(option => (
-                <div key={option.id} className={`player-card__stat player-card__stat--${option.property}`}>
+                <div
+                    key={option.id}
+                    className={`player-card__stat player-card__stat--${option.property}`}>
                     <span className="stat-label">{option.property}</span>
                     <span
-                        className="stat-value">
+                        className={`stat-value ${
+                            card.changedStat === option.property
+                                ? 'stat-value--changed'
+                                : ''
+                        }`}>
                         {!card.hasHiddenStats && card.stats[option.property]}
                         {card.hasHiddenStats && '?'}
                     </span>

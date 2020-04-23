@@ -36,6 +36,9 @@ const CardSelectionContainer = ({ cards, removeCard, setTeam, handles }) => {
         }, 3000);
     };
 
+    /**
+     * Load the team
+     */
     async function loadTeam() {
         try {
             let team = await dbService.getTeam();
@@ -44,34 +47,58 @@ const CardSelectionContainer = ({ cards, removeCard, setTeam, handles }) => {
                 showNotification('You have no saved team..', 'error');
             }
 
-            return team;
+            return setTeam(team);
         } catch (err) {
             showNotification('The team could not be loaded..', 'error');
         }
     }
+
+    /**
+     * Save team in the db
+     *
+     * @param {array} cards
+     */
+    async function saveTeam(cards) {
+        try {
+            await dbService.setTeam(cards);
+            showNotification('Your team has been saved.', 'success');
+        } catch (err) {
+            console.dir(err);
+            showNotification('The team could not be saved..', 'error');
+        }
+    }
+
     const addCard = cards.length < maxPlayers && <AddCard />;
     const gameMenu = (
         <div className="game-menu">
+            {cards.length > 0 && (
+                <button className="btn primary" onClick={() => setTeam([])}>
+                    Clear Team
+                </button>
+            )}
             <button
                 className="btn primary"
                 onClick={() => setTeam(gameService.generateTeam())}>
-                Generate Team
+                Random Team
             </button>
             <button className="btn primary" onClick={() => loadTeam()}>
                 Load Team
             </button>
             {cards.length === maxPlayers && (
+                <button className="btn primary" onClick={() => saveTeam(cards)}>
+                    Save team
+                </button>
+            )}
+            {cards.length === maxPlayers && (
                 <button
-                    className="btn primary"
+                    className="btn success"
                     onClick={() => handles.start(cards)}>
                     Start Game
                 </button>
             )}
         </div>
     );
-    const cardsList = cards.length > 0 && (
-        <CardsList cards={cards} removeHandle={removeCard}></CardsList>
-    );
+    const cardsList = <CardsList cards={cards} removeHandle={removeCard}></CardsList>;
 
     return (
         <>
@@ -81,8 +108,8 @@ const CardSelectionContainer = ({ cards, removeCard, setTeam, handles }) => {
                 </div>
             )}
             {gameMenu}
-            {addCard}
             {cardsList}
+            {addCard}
         </>
     );
 };

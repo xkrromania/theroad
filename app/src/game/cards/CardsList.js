@@ -3,6 +3,27 @@ import PropTypes from 'prop-types';
 import Card from './Card';
 
 const CardsList = ({ cards, removeHandle }) => {
+    const fillPlaceholderCards = () => {
+        const placeholderNeeded = 5 - cards.length;
+        let placeholders = [];
+
+        for (let i = 0; i < placeholderNeeded; i++) {
+            placeholders.push(
+                <article
+                    key={`placeholder-${i}`}
+                    className={`card card--placeholder`}></article>
+            );
+        }
+
+        if (placeholders.length === 0) {
+            return;
+        }
+
+        console.dir(placeholders);
+
+        return placeholders;
+    };
+
     return (
         <section className="card-list">
             {cards.map(card => (
@@ -13,6 +34,7 @@ const CardsList = ({ cards, removeHandle }) => {
                     stats={card.stats}
                     removeHandle={() => removeHandle(card.id)}></Card>
             ))}
+            {fillPlaceholderCards()}
         </section>
     );
 };

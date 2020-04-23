@@ -47,6 +47,13 @@ $card-bg: white;
         }
     }
 
+    &--placeholder {
+        background: $app-bg-fallback;
+        border: 2px dashed darken($app-bg-fallback, 15%);
+        height: 356px;
+        opacity: .5;
+    }
+
     &--gkr {
         background: $goalkeeper-bg;
         color: $dark-text;

@@ -83,7 +83,6 @@ class Match extends React.Component {
         );
 
         const menuActions = {
-            next: this.playTurn,
             stop: () => handles.stop()
         };
 
@@ -102,8 +101,27 @@ class Match extends React.Component {
                     team="user"
                     cards={cards.user}
                     handleSelect={this.selectCard}></Team>
+
+                {!isMatchEnded && (
+                    <button
+                        className={`btn ${
+                            isUserAttacking ? 'success' : 'primary'
+                        }`}
+                        disabled={isMatchEnded}
+                        onClick={() => this.playTurn()}>
+                        {isUserAttacking ? 'Attack' : 'Defend'}
+                    </button>
+                )}
+                {isMatchEnded && (
+                    <span className="alert alert--success">
+                        The game has ended.
+                    </span>
+                )}
+
                 {timelineBar}
-                <Team team="opponent" cards={cards.opponent}></Team>
+                <Team
+                    team="opponent"
+                    cards={cards.opponent}></Team>
             </div>
         );
     }

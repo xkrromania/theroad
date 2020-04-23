@@ -4,21 +4,9 @@ import PropTypes from 'prop-types';
 const MatchMenu = ({
     actions,
     minute,
-    isMatchEnded,
-    isUserAttacking,
     score
 }) => (
-    <div className="match-menu">
-        {!isMatchEnded && (
-            <button
-                className="btn success"
-                disabled={isMatchEnded}
-                onClick={() => actions.next()}>
-                {isUserAttacking ? 'Attack' : 'Defend'}
-            </button>
-        )}
-        {isMatchEnded && <span className="alert alert--success">The game has ended.</span>}
-        <button className="btn primary" onClick={actions.stop}>
+    <div className="match-menu"> <button className="btn primary" onClick={actions.stop}>
             Quit Game
         </button>
 

@@ -3,6 +3,8 @@ import scenariosService from './scenarios';
 
 const TIMELINE_MIN = 5;
 const TIMELINE_MAX = 10;
+const MAX_LOST_STAT = 6;
+const MIN_LOST_STAT = 1;
 
 let timelineEntryId = 0;
 let state = {
@@ -134,6 +136,8 @@ const updateCardStat = (team, cardId, stat, value) => {
     state.cards[team].forEach(card => {
         if (card.id === cardId) {
             card.stats = { ...card.stats, [stat]: value };
+            card.changedStat = stat;
+
             return;
         }
     });
@@ -166,17 +170,18 @@ const simulateEvent = (offCard, defCard, offTeam) => {
     let timelineText = '';
     let isGoal = false;
     let difference = offStat.value - defStat.value;
+    let lostStatPoints = utilsService.getRandom(MIN_LOST_STAT, MAX_LOST_STAT);
 
     // Offense Wins
     if (difference > 0) {
         isGoal = true;
         state.score[offTeam]++;
-        timelineText = scenariosService.getTextByScenario(scenario, offCard, defCard, isGoal, difference);
+        timelineText = scenariosService.getTextByScenario(scenario, offCard, defCard, isGoal, lostStatPoints);
         updateCardStat(
             offTeam === 'user' ? 'opponent' : 'user',
             defCard.id,
             defStat.name,
-            defCard.stats[defStat.name] - difference
+            lostStatPoints
         );
 
         return timelineText;
@@ -187,9 +192,9 @@ const simulateEvent = (offCard, defCard, offTeam) => {
         offTeam,
         offCard.id,
         offStat.name,
-        offCard.stats[offStat.name] - (-difference)
+        lostStatPoints
     );
-    timelineText = scenariosService.getTextByScenario(scenario, offCard, defCard, isGoal, difference);
+    timelineText = scenariosService.getTextByScenario(scenario, offCard, defCard, isGoal, lostStatPoints);
 
     return timelineText;
 };
@@ -266,6 +271,7 @@ const matchService = {
             let gameCard = {
                 ...card,
                 hasHiddenStats: hasHiddenStats,
+                changedStat: '',
                 isSelected: false
             };
 
