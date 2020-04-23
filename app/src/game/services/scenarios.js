@@ -40,7 +40,7 @@ const getTextByScenario = (scenario, offCard, defCard, isGoal, difference) => {
         case 'cross':
             statLost = 'PHY';
             if (isGoal) {
-                text = `${offCard.name} heads the ball into the net `;
+                text = `Goal! ${offCard.name} heads the ball into the net `;
                 text += isDefCardGoalkeeper
                     ? `despite ${defCard.name} efforts`
                     : `after jumping with ${defCard.name}`;
@@ -55,6 +55,7 @@ const getTextByScenario = (scenario, offCard, defCard, isGoal, difference) => {
             statLost = 'ABI';
             text = `${offCard.name} `;
             if (isGoal) {
+                text += 'Goal! ';
                 text += isDefCardGoalkeeper
                     ? ` shoots on goal and the attempt can't be saved by ${defCard.name}`
                     : ` shoots and scores despite ${defCard.name} opposition`;
@@ -67,7 +68,7 @@ const getTextByScenario = (scenario, offCard, defCard, isGoal, difference) => {
             break;
     }
 
-    if (difference > 0) {
+    if (Math.abs((difference) > 0)) {
         text += ` (who lost ${Math.abs(difference)} ${statLost}).`;
     } else {
         text += '.';
