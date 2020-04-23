@@ -1,11 +1,41 @@
 @keyframes jump {
-    0% { transform: translate(-50%, -50%) }
-    50% { transform: translate(-50%, -90%) }
-    100% { transform: translate(-50%, -50%) }
+    0% {
+        transform: translate(-50%, -50%)
+    }
+
+    50% {
+        transform: translate(-50%, -90%)
+    }
+
+    100% {
+        transform: translate(-50%, -50%)
+    }
 }
 
 @keyframes jump-relative {
-    0% { transform: translateY(0) }
-    50% { transform: translateY(8px) }
-    100% { transform: translateY(0) }
+    0% {
+        transform: translateY(0)
+    }
+
+    50% {
+        transform: translateY(8px)
+    }
+
+    100% {
+        transform: translateY(0)
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity:1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity:0;
+    }
 }

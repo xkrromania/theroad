@@ -26,7 +26,7 @@ const cardsSlice = createSlice({
             return state.filter(card => card.id !== action.payload);
         },
         // TESTING ONLY
-        setBasicTeam(state, action) {
+        setTeam(state, action) {
             state.length = 0;
             action.payload.forEach(card => {
                 state.push(card);
@@ -35,6 +35,6 @@ const cardsSlice = createSlice({
     }
 });
 
-export const { addCard, removeCard, setBasicTeam } = cardsSlice.actions;
+export const { addCard, removeCard, setTeam } = cardsSlice.actions;
 
 export default cardsSlice.reducer;

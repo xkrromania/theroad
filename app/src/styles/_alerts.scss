@@ -1,11 +1,11 @@
 .alert {
-    animation: jump 1.2s infinite;
+    animation: jump 1.2s infinite, fadeOut ease-out 3.5s;
     box-shadow: 0 0 15px 0 rgba(#000, 0.35);
     font-size: 1em;
     left: 50%;
     padding: 16px 8px;
     position: fixed;
-    opacity: .9;
+    opacity: 0;
     top: 64px;
     transform: translate(-50%, -50%);
     z-index: 15;

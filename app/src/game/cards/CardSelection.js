@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { removeCard, setBasicTeam } from './cardsSlice';
+import { removeCard, setTeam } from './cardsSlice';
 import CardSelectionContainer from './CardSelectionContainer';
 
 const mapStateToProps = state => {
@@ -8,7 +8,7 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = { removeCard, setBasicTeam };
+const mapDispatchToProps = { removeCard, setTeam };
 
 const CardSelection = connect(
     mapStateToProps,
