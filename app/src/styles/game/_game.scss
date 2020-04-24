@@ -1,6 +1,6 @@
 @import 'game-variables';
 @import 'cards';
-@import 'match';
+@import 'battle';
 
 .game-view {
     font-family: $game-font;
@@ -16,7 +16,7 @@
     display: flex;
     direction: row;
     margin-bottom: 8px;
-    padding: 8px;
+    padding: 8px 0;
 
     > * + * {
         margin-left: 8px;

@@ -1,8 +1,8 @@
 import utilsService from './utils';
 import NAMES from './constants/names';
 import SURNAMES from './constants/surnames';
+import MAX_PLAYERS from './constants/max_players';
 
-const MAX_PLAYERS = 11;
 const getPlayerName = () => {
     let name = NAMES[utilsService.getRandom(0, NAMES.length - 1)],
         surname = SURNAMES[utilsService.getRandom(0, SURNAMES.length - 1)];
@@ -32,8 +32,6 @@ const generateStats = (overall) => {
 
     stats.phy = utilsService.getRandom(5, statPointsRemaining);
 
-    console.dir(stats.abi + stats.int + stats.phy);
-
     return stats;
 };
 
@@ -61,7 +59,7 @@ const generateTeam = (minOverall, maxOverall) => {
     }
 
     for (let i = 0; i < MAX_PLAYERS; i++) {
-        let playerCard = {
+        let UserCard = {
             id: i,
             name: getPlayerName(),
             stats: generateStats(overall),
@@ -69,7 +67,7 @@ const generateTeam = (minOverall, maxOverall) => {
             type: possibleTypes[i]
         };
 
-        team.push(playerCard);
+        team.push(UserCard);
     }
 
     return team;
@@ -77,9 +75,6 @@ const generateTeam = (minOverall, maxOverall) => {
 
 const gameService = {
     generateTeam,
-    getMaxPlayers: () => {
-        return MAX_PLAYERS;
-    },
     getOpponentTeam: generateTeam
 };
 

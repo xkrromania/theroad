@@ -65,3 +65,13 @@
         transform: skewX(0deg);
     }
 }
+
+@keyframes battleCard {
+    from {
+        box-shadow: 0 0 6px -6px $highlight-color;
+    }
+
+    to {
+        box-shadow: 0 0 6px 6px $highlight-color;
+    }
+}

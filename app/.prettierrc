@@ -6,5 +6,5 @@
     "quoteProps": "consistent",
     "bracketSpacing": true,
     "jsxBracketSameLine": true,
-    "printWidth": 120
+    "printWidth": 100
 }

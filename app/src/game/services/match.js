@@ -1,5 +1,6 @@
 import utilsService from './utils';
 import scenariosService from './scenarios';
+import MAX_PLAYERS from './constants/max_players';
 
 const TIMELINE_MIN = 5;
 const TIMELINE_MAX = 10;
@@ -26,7 +27,7 @@ let state = {
 /**
  * Reset match to its initial state
  */
-const resetState = () => () => {
+const resetState = () => {
     state.cards.user.length = 0;
     state.cards.opponent.length = 0;
     state.minute = 0;
@@ -129,8 +130,11 @@ const getCardValueForTurn = (stats, type, scenario, isAttacking) => {
  * Auto select an opponent card for the turn
  */
 const autoSelectOpponentCard = () => {
-    let opponentCardId = state.isUserAttacking ? utilsService.getRandom(0, 2) : utilsService.getRandom(3, 4);
+    let opponentCardId = state.isUserAttacking
+        ? utilsService.getRandom(0, MAX_PLAYERS / 2)
+        : utilsService.getRandom((MAX_PLAYERS - 1) / 2, MAX_PLAYERS);
 
+    console.log(opponentCardId);
     selectCardForTeam('opponent', opponentCardId);
     state.cards.opponent[opponentCardId].hasHiddenStats = false;
 };
@@ -246,7 +250,12 @@ const getTurnWinner = function(offTeam, offCard, defCard, lostStatPoints, scenar
     const winner = difference > 0 ? 'offense' : 'defense';
 
     if (winner === 'offense') {
-        updateCardStat(offTeam === 'user' ? 'opponent' : 'user', defCard.id, defStat.name, lostStatPoints);
+        updateCardStat(
+            offTeam === 'user' ? 'opponent' : 'user',
+            defCard.id,
+            defStat.name,
+            lostStatPoints
+        );
     } else {
         updateCardStat(offTeam, offCard.id, offStat.name, lostStatPoints);
     }
@@ -278,7 +287,13 @@ const simulateBattle = () => {
         state.score[offTeam]++;
     }
 
-    timelineText = scenariosService.getTextByScenario(scenario, offCard, defCard, isGoal, lostStatPoints);
+    timelineText = scenariosService.getTextByScenario(
+        scenario,
+        offCard,
+        defCard,
+        isGoal,
+        lostStatPoints
+    );
 
     logTurnOutcome(timelineText);
 };

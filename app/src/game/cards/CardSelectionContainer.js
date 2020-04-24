@@ -6,11 +6,11 @@ import PropTypes from 'prop-types';
 import { FaDownload, FaRandom, FaUpload } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { GiSoccerBall } from 'react-icons/gi';
+import MAX_PLAYERS from '../services/constants/max_players';
 
 import gameService from '../services/game';
 import dbService from '../../app/database';
-
-const maxPlayers = gameService.getMaxPlayers();
+import Notification from '../../components/Notification';
 
 const CardSelectionContainer = ({ cards, removeCard, setTeam, handles }) => {
     const [notification, setNotification] = useState({
@@ -71,7 +71,7 @@ const CardSelectionContainer = ({ cards, removeCard, setTeam, handles }) => {
         }
     }
 
-    const addCard = cards.length < maxPlayers && <AddCard />;
+    const addCard = cards.length < MAX_PLAYERS && <AddCard />;
     const gameMenu = (
         <div className="game-menu">
             {cards.length > 0 && (
@@ -79,39 +79,29 @@ const CardSelectionContainer = ({ cards, removeCard, setTeam, handles }) => {
                     <MdDeleteForever /> Clear Team
                 </button>
             )}
-            <button
-                className="btn primary"
-                onClick={() => setTeam(gameService.generateTeam())}>
+            <button className="btn primary" onClick={() => setTeam(gameService.generateTeam())}>
                 <FaRandom /> Random Team
             </button>
             <button className="btn primary" onClick={() => loadTeam()}>
                 <FaDownload /> Load Team
             </button>
-            {cards.length === maxPlayers && (
+            {cards.length === MAX_PLAYERS && (
                 <button className="btn primary" onClick={() => saveTeam(cards)}>
                     <FaUpload /> Save team
                 </button>
             )}
-            {cards.length === maxPlayers && (
-                <button
-                    className="btn success"
-                    onClick={() => handles.start(cards)}>
+            {cards.length === MAX_PLAYERS && (
+                <button className="btn success" onClick={() => handles.start(cards)}>
                     <GiSoccerBall /> Start Game
                 </button>
             )}
         </div>
     );
-    const cardsList = (
-        <CardsList cards={cards} removeHandle={removeCard}></CardsList>
-    );
+    const cardsList = <CardsList cards={cards} removeHandle={removeCard}></CardsList>;
 
     return (
         <>
-            {notification.text.length > 0 && (
-                <div className={`alert alert--${notification.type}`}>
-                    {notification.text}
-                </div>
-            )}
+            {notification.text.length > 0 && <Notification text={notification.text} type={notification.type} />}
             {gameMenu}
             {cardsList}
             {addCard}

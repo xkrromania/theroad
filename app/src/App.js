@@ -3,7 +3,7 @@ import GameView from './game/GameView';
 
 function App() {
   return (
-    <div className="app">
+    <div className="app with-scrollbar">
       <header className="app__header">
         <div className="app__header-container">
           <h1>The Big Match</h1>

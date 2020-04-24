@@ -1,6 +1,6 @@
 import React from 'react';
 import CardSelection from './cards/CardSelection';
-import Match from './match/Match';
+import BattleContainer from './battle/BattleContainer';
 import matchService from './services/match';
 import gameService from './services/game';
 
@@ -23,6 +23,8 @@ class GameView extends React.Component {
 
     stopMatch() {
         matchService.resetState();
+        matchService.setCardsForTeam([], 'user');
+
         this.setState({
             isMatchOn: false
         });
@@ -38,7 +40,7 @@ class GameView extends React.Component {
         return (
             <section className="game-view">
                 {!isMatchOn && <CardSelection handles={handles} />}
-                {isMatchOn && <Match handles={handles} />}
+                {isMatchOn && <BattleContainer handles={handles} />}
             </section>
         );
     }
