@@ -130,11 +130,11 @@ const getCardValueForTurn = (stats, type, scenario, isAttacking) => {
  * Auto select an opponent card for the turn
  */
 const autoSelectOpponentCard = () => {
+    let defenderBorderIndex = (MAX_PLAYERS - 1) / 2 + 1;
     let opponentCardId = state.isUserAttacking
-        ? utilsService.getRandom(0, MAX_PLAYERS / 2)
-        : utilsService.getRandom((MAX_PLAYERS - 1) / 2, MAX_PLAYERS);
+        ? utilsService.getRandom(0, defenderBorderIndex)
+        : utilsService.getRandom(defenderBorderIndex + 1, MAX_PLAYERS);
 
-    console.log(opponentCardId);
     selectCardForTeam('opponent', opponentCardId);
     state.cards.opponent[opponentCardId].hasHiddenStats = false;
 };
@@ -167,7 +167,7 @@ const updateCardStat = (team, cardId, stat, lostPoints) => {
  */
 const updateMinute = () => {
     const endMinute = utilsService.getRandom(91, 96);
-    const computedMinute = utilsService.getRandom(TIMELINE_MIN, TIMELINE_MAX);
+    let computedMinute = utilsService.getRandom(TIMELINE_MIN, TIMELINE_MAX);
     state.minute += computedMinute;
 
     if (state.minute >= endMinute) {

@@ -96,10 +96,9 @@ $grass-noise: 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4X
     }
 
     .battle-card {
-        animation: battleCard 1s infinite alternate;
         align-items: center;
         background: #fff;
-        border: 1px solid darken($app-bg-fallback, 5%);
+        border: 1px solid darken($grass-color, 5%);
         border-radius: 8px;
         box-shadow: $app-box-shadow;
         display: flex;

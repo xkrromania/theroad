@@ -108,7 +108,6 @@ class BattleContainer extends React.Component {
                         team="user"
                         cards={cards.user}
                         handleSelect={this.selectCard}></UserCardsContainer>
-
                     <BattleMenu
                         score={score}
                         minute={minute}
@@ -117,12 +116,16 @@ class BattleContainer extends React.Component {
                         actions={menuActions}></BattleMenu>
                     <section className="battleground">
                         <div className="battleground__cards">
-                            {battleCard.user && <BattleCard card={battleCard.user} isUserCard={true}></BattleCard>}
+                            {battleCard.user && (
+                                <BattleCard card={battleCard.user} isUserCard={true}></BattleCard>
+                            )}
                             {!battleCard.user && (
                                 <div className="battle-card battle-card--placeholder"></div>
                             )}
                             {showOpponentBattleCard && battleCard.opponent && (
-                                <BattleCard card={battleCard.opponent} isUserCard={false}></BattleCard>
+                                <BattleCard
+                                    card={battleCard.opponent}
+                                    isUserCard={false}></BattleCard>
                             )}
                             {(!battleCard.opponent || !showOpponentBattleCard) && (
                                 <div className="battle-card battle-card--placeholder"></div>

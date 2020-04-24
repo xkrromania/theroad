@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { GiSoccerBall } from 'react-icons/gi';
 import { FaShieldAlt } from 'react-icons/fa';
 
-const BattleMenu = ({ actions, minute, score, isUserAttacking, isMatchEnded }) => (
-    <div className="battle-menu">
+const BattleMenu = ({ actions, minute, score, isUserAttacking, isMatchEnded }) => {
+    const turnBtn = (
         <button
             className={`btn ${isUserAttacking ? 'success' : 'primary'}`}
             disabled={isMatchEnded}
@@ -19,17 +19,23 @@ const BattleMenu = ({ actions, minute, score, isUserAttacking, isMatchEnded }) =
                 </>
             )}
         </button>
-        <span className="scoreboard">
-            <span className="scoreboard__minute">{`min. ${minute}' `}</span>
-            <span className="scoreboard__score">
-                {score.user} - {score.opponent}
+    );
+    return (
+        <div className="battle-menu">
+            {!isMatchEnded && turnBtn}
+            <span className="scoreboard">
+                <span className="scoreboard__minute">{`min. ${minute}' `}</span>
+                <span className="scoreboard__score">
+                    {score.user} - {score.opponent}
+                </span>
             </span>
-        </span>
-        <button className="btn primary quit-game" onClick={actions.stop}>
-            Quit Game
-        </button>
-    </div>
-);
+            {isMatchEnded && <span className="scoreboard__message">What a game we had.</span>}
+            <button className="btn primary quit-game" onClick={actions.stop}>
+                Quit Game
+            </button>
+        </div>
+    );
+};
 
 BattleMenu.propTypes = {
     actions: PropTypes.object,
