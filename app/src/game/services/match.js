@@ -44,7 +44,21 @@ const selectCardForTeam = (team, cardId) => {
     });
 };
 
-const addTimelineEntry = text => {
+/**
+ * Add a generic text event
+ *
+ * @param {string} text
+ */
+const addGenericEvent = text => {
+    state.timeline.unshift({
+        id: timelineEntryId,
+        minute: state.minute,
+        text: text,
+        isUserAttacking: true
+    });
+};
+
+const addTurnEvent = text => {
     const endMinute = utilsService.getRandom(91, 96);
     const computedMinute = utilsService.getRandom(TIMELINE_MIN, TIMELINE_MAX);
     state.minute += computedMinute;
@@ -109,7 +123,7 @@ const getTypeDeficit = (type, isAttacking) => {
  *
  * @returns {object}
  */
-const getCardLevelForScenario = (stats, type, scenario, isAttacking) => {
+const getCardLevelForTurn = (stats, type, scenario, isAttacking) => {
     let typeDeficit = getTypeDeficit(type, isAttacking);
 
     switch (scenario) {
@@ -147,7 +161,6 @@ const updateCardStat = (team, cardId, stat, lostPoints) => {
 
             value = card.stats[stat] - lostPoints;
             value = value < 0 ? 0 : value;
-            console.log(`stat: ${card.stats[stat]}, lost points: ${lostPoints}, newval: ${value}`);
             card.stats = { ...card.stats, [stat]: value };
             card.changedStats.push(stat);
 
@@ -167,13 +180,13 @@ const updateCardStat = (team, cardId, stat, lostPoints) => {
  */
 const simulateEvent = (offCard, defCard, offTeam) => {
     const scenario = scenariosService.getScenarioName(offCard, defCard);
-    const offStat = getCardLevelForScenario(
+    const offStat = getCardLevelForTurn(
         offCard.stats,
         offCard.type,
         scenario,
         true
     );
-    const defStat = getCardLevelForScenario(
+    const defStat = getCardLevelForTurn(
         defCard.stats,
         defCard.type,
         scenario,
@@ -228,12 +241,7 @@ const simulateTurn = () => {
     }
 
     if (state.timeline.length === 0) {
-        state.timeline.unshift({
-            id: timelineEntryId,
-            minute: state.minute,
-            text: 'Game started.',
-            isUserAttacking: state.isUserAttacking
-        });
+       addGenericEvent('Game started');
     }
 
     try {
@@ -250,11 +258,11 @@ const simulateTurn = () => {
         };
 
         if (state.isUserAttacking) {
-            addTimelineEntry(
+            addTurnEvent(
                 simulateEvent(selected.user, selected.opponent, 'user')
             );
         } else {
-            addTimelineEntry(
+            addTurnEvent(
                 simulateEvent(selected.opponent, selected.user, 'opponent')
             );
         }
@@ -324,12 +332,7 @@ const matchService = {
                 state.isUserAttacking = !state.isUserAttacking;
                 if (state.isMatchEnded) {
                     timelineEntryId++;
-                    state.timeline.unshift({
-                        id: timelineEntryId,
-                        minute: state.minute,
-                        text: 'Game has ended.',
-                        isUserAttacking: state.isUserAttacking
-                    });
+                    addGenericEvent('Game has ended.');
                     timelineEntryId = 0;
                 }
                 return resolve({
