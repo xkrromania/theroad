@@ -13,14 +13,69 @@ let state = {
         user: [],
         opponent: []
     },
+    minute: 0,
+    isMatchEnded: false,
+    isUserAttacking: true,
     score: {
         user: 0,
         opponent: 0
     },
-    minute: 0,
-    timeline: [],
-    isUserAttacking: true,
-    isMatchEnded: false
+    timeline: []
+};
+
+/**
+ * Reset match to its initial state
+ */
+const resetState = () => () => {
+    state.cards.user.length = 0;
+    state.cards.opponent.length = 0;
+    state.minute = 0;
+    state.isMatchEnded = false;
+    state.isUserAttacking = true;
+    state.score.user = 0;
+    state.score.opponent = 0;
+    state.timeline.length = 0;
+};
+
+/**
+ * Returns card for the given team
+ *
+ * @param {string} team
+ *
+ * @returns {array}
+ */
+const getCardsForTeam = team => {
+    return state.cards[team];
+};
+
+/**
+ * Set cards for the given team
+ *
+ * @param {array} cards
+ * @param {string} team
+ */
+const setCardsForTeam = (cards, team) => {
+    const hasHiddenStats = team === 'opponent';
+
+    cards.forEach(card => {
+        let gameCard = {
+            ...card,
+            hasHiddenStats: hasHiddenStats,
+            changedStats: [],
+            isSelected: false
+        };
+
+        state.cards[team].push(gameCard);
+    });
+};
+
+/**
+ * Clear all cards for the given team
+ *
+ * @param {string} team
+ */
+const clearCardsForTeam = team => {
+    state.cards[team].length = 0;
 };
 
 /**
@@ -46,20 +101,67 @@ const selectCardForTeam = (team, cardId) => {
 };
 
 /**
- * Add a generic text event
+ * Get the card compare value that will be used for this turn
  *
- * @param {string} text
+ * @param {object} stats
+ * @param {string} type
+ * @param {boolean} isAttacking
+ * @param {string} scenario
+ *
+ * @returns {object}
  */
-const addGenericEvent = text => {
-    state.timeline.unshift({
-        id: timelineEntryId,
-        minute: state.minute,
-        text: text,
-        isUserAttacking: true
+const getCardValueForTurn = (stats, type, scenario, isAttacking) => {
+    const typeDeficit = getTypeDeficit(type, isAttacking);
+    const statAffectedMap = {
+        set_piece: 'int',
+        cross: 'phy',
+        open_play: 'abi'
+    };
+    let statAffected = statAffectedMap[scenario] || 'abi';
+
+    return {
+        name: statAffected,
+        value: parseInt(stats[statAffected] * typeDeficit)
+    };
+};
+
+/**
+ * Auto select an opponent card for the turn
+ */
+const autoSelectOpponentCard = () => {
+    let opponentCardId = state.isUserAttacking ? utilsService.getRandom(0, 2) : utilsService.getRandom(3, 4);
+
+    selectCardForTeam('opponent', opponentCardId);
+    state.cards.opponent[opponentCardId].hasHiddenStats = false;
+};
+
+/**
+ * Update card stats
+ *
+ * @param {string} team
+ * @param {number} cardId
+ * @param {string} stat
+ * @param {number} lostPoints
+ */
+const updateCardStat = (team, cardId, stat, lostPoints) => {
+    let value;
+
+    state.cards[team].forEach(card => {
+        if (card.id === cardId) {
+            value = card.stats[stat] - lostPoints;
+            value = value < 0 ? 0 : value;
+            card.stats = { ...card.stats, [stat]: value };
+            card.changedStats.push(stat);
+
+            return;
+        }
     });
 };
 
-const addTurnEvent = text => {
+/**
+ * Update Match Minute
+ */
+const updateMinute = () => {
     const endMinute = utilsService.getRandom(91, 96);
     const computedMinute = utilsService.getRandom(TIMELINE_MIN, TIMELINE_MAX);
     state.minute += computedMinute;
@@ -68,6 +170,29 @@ const addTurnEvent = text => {
         state.minute = endMinute;
         state.isMatchEnded = true;
     }
+};
+
+/**
+ * Add a generic text event
+ *
+ * @param {string} text
+ */
+const logGenericEvent = text => {
+    state.timeline.unshift({
+        id: timelineEntryId,
+        minute: state.minute,
+        text: text,
+        isUserAttacking: true
+    });
+};
+
+/**
+ * Add turn outcome to the timeline
+ *
+ * @param {string} text
+ */
+const logTurnOutcome = text => {
+    updateMinute();
     timelineEntryId++;
     state.timeline.unshift({
         id: timelineEntryId,
@@ -104,54 +229,6 @@ const getTypeDeficit = (type, isAttacking) => {
 };
 
 /**
- * Get the card compare value that will be used for this turn
- *
- * @param {object} stats
- * @param {string} type
- * @param {boolean} isAttacking
- * @param {string} scenario
- *
- * @returns {object}
- */
-const getCardValueForTurn = (stats, type, scenario, isAttacking) => {
-    const typeDeficit = getTypeDeficit(type, isAttacking);
-    const statAffectedMap = {
-        set_piece: 'int',
-        cross: 'phy',
-        open_play: 'abi'
-    };
-    let statAffected = statAffectedMap[scenario] || 'abi';
-
-    return {
-        name: statAffected,
-        value: parseInt(stats[statAffected] * typeDeficit)
-    };
-};
-
-/**
- * Update card stats
- *
- * @param {string} team
- * @param {number} cardId
- * @param {string} stat
- * @param {number} lostPoints
- */
-const updateCardStat = (team, cardId, stat, lostPoints) => {
-    let value;
-
-    state.cards[team].forEach(card => {
-        if (card.id === cardId) {
-            value = card.stats[stat] - lostPoints;
-            value = value < 0 ? 0 : value;
-            card.stats = { ...card.stats, [stat]: value };
-            card.changedStats.push(stat);
-
-            return;
-        }
-    });
-};
-
-/**
  * Get the side that won the turn
  *
  * @param {string} offTeam
@@ -180,7 +257,7 @@ const getTurnWinner = function(offTeam, offCard, defCard, lostStatPoints, scenar
 /**
  * Simulate the event that involves the two cards
  */
-const simulateEvent = () => {
+const simulateBattle = () => {
     const selected = {
         user: getSelectedCard('user'),
         opponent: getSelectedCard('opponent')
@@ -203,21 +280,11 @@ const simulateEvent = () => {
 
     timelineText = scenariosService.getTextByScenario(scenario, offCard, defCard, isGoal, lostStatPoints);
 
-    addTurnEvent(timelineText);
+    logTurnOutcome(timelineText);
 };
 
 /**
- * Auto select an opponent card for the turn
- */
-const autoSelectOpponentCard = () => {
-    let opponentCardId = state.isUserAttacking ? utilsService.getRandom(0, 2) : utilsService.getRandom(3, 4);
-
-    selectCardForTeam('opponent', opponentCardId);
-    state.cards.opponent[opponentCardId].hasHiddenStats = false;
-};
-
-/**
- * Play the turn
+ * Simulate the card battle
  */
 const simulateTurn = () => {
     if (state.isMatchEnded) {
@@ -225,95 +292,57 @@ const simulateTurn = () => {
     }
 
     if (state.timeline.length === 0) {
-        addGenericEvent('Game started.');
+        logGenericEvent('Game started.');
     }
 
     try {
         autoSelectOpponentCard();
-        simulateEvent();
+        simulateBattle();
     } catch (error) {
         console.error(error);
     }
 };
 
-const matchService = {
-    state: state,
-    resetState: () => {
-        state.score.user = 0;
-        state.score.opponent = 0;
-        state.cards.user.length = 0;
-        state.cards.opponent.length = 0;
-        state.isMatchEnded = false;
-        state.timeline.length = 0;
-        state.isUserAttacking = true;
-        state.minute = 0;
-    },
-    getCardsForTeam: team => {
-        return state.cards[team];
-    },
-    /**
-     * Set cards for a team
-     *
-     * @param {array} cards
-     * @param {string} team user/opponent
-     */
-    setCardsForTeam: (cards, team) => {
-        const hasHiddenStats = team === 'opponent';
-
-        cards.forEach(card => {
-            let gameCard = {
-                ...card,
-                hasHiddenStats: hasHiddenStats,
-                changedStats: [],
-                isSelected: false
-            };
-
-            state.cards[team].push(gameCard);
-        });
-    },
-    /**
-     * Clear all cards
-     *
-     * @param {array} cards
-     * @param {string} team user/opponent
-     */
-    clearCardsForTeam: team => {
-        state.cards[team].length = 0;
-    },
-    /**
-     * Set a card to selected
-     *
-     * @param {number} cardId
-     * @param {string} team
-     */
-    selectCardForTeam: selectCardForTeam,
-    /**
-     * Play game turn
-     */
-    playTurn: async () => {
-        let promise = new Promise((resolve, reject) => {
-            if (getSelectedCard('user')) {
-                simulateTurn();
-                state.isUserAttacking = !state.isUserAttacking;
-                if (state.isMatchEnded) {
-                    timelineEntryId++;
-                    addGenericEvent('Game has ended.');
-                    timelineEntryId = 0;
-                }
-                return resolve({
-                    cards: state.cards,
-                    score: state.score,
-                    minute: state.minute,
-                    timeline: state.timeline,
-                    isMatchEnded: state.isMatchEnded,
-                    isUserAttacking: state.isUserAttacking
-                });
+/**
+ * Play the turn
+ *
+ * @returns {promise}
+ */
+const playTurn = async function() {
+    let promise = new Promise((resolve, reject) => {
+        if (getSelectedCard('user')) {
+            simulateTurn();
+            state.isUserAttacking = !state.isUserAttacking;
+            if (state.isMatchEnded) {
+                timelineEntryId++;
+                logGenericEvent('Game has ended.');
+                timelineEntryId = 0;
             }
-            return reject('Select a card first.');
-        });
 
-        return promise;
-    }
+            return resolve({
+                cards: state.cards,
+                score: state.score,
+                minute: state.minute,
+                timeline: state.timeline,
+                isMatchEnded: state.isMatchEnded,
+                isUserAttacking: state.isUserAttacking
+            });
+        }
+
+        return reject('Select a card first.');
+    });
+
+    return promise;
+};
+
+const matchService = {
+    state,
+    resetState,
+    getCardsForTeam,
+    setCardsForTeam,
+    clearCardsForTeam,
+    selectCardForTeam,
+    playTurn
 };
 
 export default matchService;

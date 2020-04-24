@@ -3,24 +3,25 @@ $card__stats--pwr-bg: #7768af;
 $card-bg: white;
 
 .card-list {
-    margin-top: 8px;
-    padding: 8px;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: no-wrap;
+    margin-top: 8px;
+    overflow-x: scroll;
+    padding: 8px 0;
 }
 
 .card {
     background: $card-bg;
-    //box-shadow: inset 0px 0px 0px rgba(18, 26, 49, 0.15), inset 0px 0px 0px rgba(18, 26, 49, 0.15), 5px 5px 0px rgba(55, 84, 170, 0.25), -1px -1px 5px rgba(55, 84, 170, 0.15);
-    box-shadow: 9px 7px 40px -6px rgba(0, 0, 0, 0.25);
+    box-shadow: $app-box-shadow;
     border-radius: 16px;
     color: $dark-text;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    min-width: 230px;
+    overflow: hidden;
     position: relative;
     text-align: center;
-    overflow: hidden;
     width: 230px;
 
     .remove-btn {

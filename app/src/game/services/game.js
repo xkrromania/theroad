@@ -2,7 +2,7 @@ import utilsService from './utils';
 import NAMES from './constants/names';
 import SURNAMES from './constants/surnames';
 
-const MAX_PLAYERS = 5;
+const MAX_PLAYERS = 11;
 const getPlayerName = () => {
     let name = NAMES[utilsService.getRandom(0, NAMES.length - 1)],
         surname = SURNAMES[utilsService.getRandom(0, SURNAMES.length - 1)];
@@ -11,18 +11,46 @@ const getPlayerName = () => {
 };
 
 /**
+ * Generate stats for a player
+ *
+ * @param {number} overall
+ *
+ * @returns {object}
+ */
+const generateStats = (overall) => {
+    let statPointsRemaining = overall,
+        stats = {},
+        statValue;
+
+    statValue = utilsService.getRandom(5, statPointsRemaining/2);
+    statPointsRemaining -= statValue;
+    stats.abi = statValue;
+
+    statValue = utilsService.getRandom(5, statPointsRemaining - stats.abi);
+    statPointsRemaining -= statValue;
+    stats.int = statValue;
+
+    stats.phy = utilsService.getRandom(5, statPointsRemaining);
+
+    console.dir(stats.abi + stats.int + stats.phy);
+
+    return stats;
+};
+
+/**
  * Generate a team
  *
- * @param {minAttr} minAttr
- * @param {maxAttr} maxAttr
+ * @param {minAttr} minOverall
+ * @param {maxAttr} maxOverall
  */
-const generateTeam = (minAttr, maxAttr) => {
-    minAttr = minAttr | 5;
-    maxAttr = maxAttr | 15;
+const generateTeam = (minOverall, maxOverall) => {
+    minOverall = minOverall | 20;
+    maxOverall = maxOverall | 40;
 
+    const overall = utilsService.getRandom(minOverall, maxOverall);
+    const possibleTypes = ['gkr'];
+    const outfieldPlayers = MAX_PLAYERS - 1;
     let team = [];
-    let possibleTypes = ['gkr'];
-    let outfieldPlayers = MAX_PLAYERS - 1;
 
     for (let i = 1; i < outfieldPlayers + 1; i++) {
         if (i <= outfieldPlayers / 2) {
@@ -36,11 +64,7 @@ const generateTeam = (minAttr, maxAttr) => {
         let playerCard = {
             id: i,
             name: getPlayerName(),
-            stats: {
-                abi: utilsService.getRandom(minAttr, maxAttr),
-                int: utilsService.getRandom(minAttr, maxAttr),
-                phy: utilsService.getRandom(minAttr, maxAttr)
-            },
+            stats: generateStats(overall),
             changedStats: [],
             type: possibleTypes[i]
         };
@@ -52,10 +76,10 @@ const generateTeam = (minAttr, maxAttr) => {
 };
 
 const gameService = {
+    generateTeam,
     getMaxPlayers: () => {
         return MAX_PLAYERS;
     },
-    generateTeam: generateTeam,
     getOpponentTeam: generateTeam
 };
 

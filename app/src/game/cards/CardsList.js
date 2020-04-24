@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
+import gameService from '../services/game';
 
 const CardsList = ({ cards, removeHandle }) => {
+    const maxPlayers = gameService.getMaxPlayers();
     const fillPlaceholderCards = () => {
-        const placeholderNeeded = 5 - cards.length;
+        const placeholderNeeded = maxPlayers - cards.length;
         let placeholders = [];
 
         for (let i = 0; i < placeholderNeeded; i++) {
