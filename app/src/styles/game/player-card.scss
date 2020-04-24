@@ -93,17 +93,18 @@
         }
 
         .stat-value {
+            align-content: center;
+            align-items: center;
             border-radius: 50%;
-            display: inline-block;
+            display: flex;
             font-size: 1.5em;
             font-weight: bold;
             height: 24px;
-            padding: 4px;
+            padding: 4px 8px;
             text-align: center;
-            width: 24px;
 
-            &--changed {
-                animation: shakeStat 1.5s linear infinite;
+            svg {
+                animation: shakeStat 2s ease-in infinite;
             }
         }
 

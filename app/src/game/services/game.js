@@ -41,7 +41,7 @@ const generateTeam = (minAttr, maxAttr) => {
                 int: utilsService.getRandom(minAttr, maxAttr),
                 phy: utilsService.getRandom(minAttr, maxAttr)
             },
-            changedStat: '',
+            changedStats: [],
             type: possibleTypes[i]
         };
 

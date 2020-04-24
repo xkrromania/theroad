@@ -28,7 +28,7 @@
 
 @keyframes fadeOut {
     0% {
-        opacity:1;
+        opacity: 1;
     }
 
     90% {
@@ -36,69 +36,32 @@
     }
 
     100% {
-        opacity:0;
+        opacity: 0;
     }
-}
-
-@keyframes flickerText {
-	0% {
-		opacity: 0.4;
-	}
-	5% {
-		opacity: 0.5;
-	}
-	10% {
-		opacity: 0.6;
-	}
-	15% {
-		opacity: 0.85;
-	}
-	25% {
-		opacity: 0.5;
-	}
-	30% {
-		opacity: 1;
-	}
-	35% {
-		opacity: 0.1;
-	}
-	40% {
-		opacity: 0.25;
-	}
-	45% {
-		opacity: 0.5;
-	}
-	60% {
-		opacity: 1;
-	}
-	70% {
-		opacity: 0.85;
-	}
-	80% {
-		opacity: 0.4;
-	}
-	90% {
-		opacity: 0.5;
-	}
-	100% {
-		opacity: 1;
-	}
 }
 
 @keyframes shakeStat {
     0% {
-        transform: translateX(0)
+        transform: skewX(-15deg);
     }
 
-    25% {
-        transform: translateX(-4px)
+    5% {
+        transform: skewX(15deg);
     }
 
-    75% {
-        transform: translateX(4px)
+    10% {
+        transform: skewX(-15deg);
+    }
+
+    15% {
+        transform: skewX(15deg);
+    }
+
+    20% {
+        transform: skewX(0deg);
     }
 
     100% {
-        transform: translateX(0)
+        transform: skewX(0deg);
     }
 }

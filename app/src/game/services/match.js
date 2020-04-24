@@ -79,15 +79,15 @@ const getTypeDeficit = (type, isAttacking) => {
 
         // Attack with defender (50% attributes)
         if (type === 'def') {
-            return .5;
+            return 0.5;
         }
 
         // Attack with goalkeeper (10% attributes)
-        return .1;
+        return 0.1;
     } else {
         // Defend with attacker (10% attributes)
         if (type === 'atk') {
-            return .1;
+            return 0.1;
         }
 
         // Defend with defender (100%)
@@ -96,7 +96,7 @@ const getTypeDeficit = (type, isAttacking) => {
         }
 
         // Defend with goalkeeper (90%)
-        return .9;
+        return 0.9;
     }
 };
 
@@ -131,12 +131,25 @@ const getCardLevelForScenario = (stats, type, scenario, isAttacking) => {
     }
 };
 
-const updateCardStat = (team, cardId, stat, value) => {
-    value = value < 0 ? 0 : value;
+/**
+ * Update card stats
+ *
+ * @param {string} team
+ * @param {number} cardId
+ * @param {string} stat
+ * @param {number} lostPoints
+ */
+const updateCardStat = (team, cardId, stat, lostPoints) => {
+    let value;
+
     state.cards[team].forEach(card => {
         if (card.id === cardId) {
+
+            value = card.stats[stat] - lostPoints;
+            value = value < 0 ? 0 : value;
+            console.log(`stat: ${card.stats[stat]}, lost points: ${lostPoints}, newval: ${value}`);
             card.stats = { ...card.stats, [stat]: value };
-            card.changedStat = stat;
+            card.changedStats.push(stat);
 
             return;
         }
@@ -176,7 +189,13 @@ const simulateEvent = (offCard, defCard, offTeam) => {
     if (difference > 0) {
         isGoal = true;
         state.score[offTeam]++;
-        timelineText = scenariosService.getTextByScenario(scenario, offCard, defCard, isGoal, lostStatPoints);
+        timelineText = scenariosService.getTextByScenario(
+            scenario,
+            offCard,
+            defCard,
+            isGoal,
+            lostStatPoints
+        );
         updateCardStat(
             offTeam === 'user' ? 'opponent' : 'user',
             defCard.id,
@@ -188,13 +207,14 @@ const simulateEvent = (offCard, defCard, offTeam) => {
     }
 
     // DefenseWins
-    updateCardStat(
-        offTeam,
-        offCard.id,
-        offStat.name,
+    updateCardStat(offTeam, offCard.id, offStat.name, lostStatPoints);
+    timelineText = scenariosService.getTextByScenario(
+        scenario,
+        offCard,
+        defCard,
+        isGoal,
         lostStatPoints
     );
-    timelineText = scenariosService.getTextByScenario(scenario, offCard, defCard, isGoal, lostStatPoints);
 
     return timelineText;
 };
@@ -271,7 +291,7 @@ const matchService = {
             let gameCard = {
                 ...card,
                 hasHiddenStats: hasHiddenStats,
-                changedStat: '',
+                changedStats: [],
                 isSelected: false
             };
 

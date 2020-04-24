@@ -26,6 +26,8 @@ $btn--success: #119da4;
     box-shadow: 9px 7px 40px -6px rgba(0, 0, 0, 0.25);
     color: $btn--default-text;
     cursor: pointer;
+    display: flex;
+    align-items: center;
     font-size: 1em;
     font-weight: bold;
     line-height: 26px;
@@ -39,6 +41,10 @@ $btn--success: #119da4;
     vertical-align: middle;
     text-transform: uppercase;
     -webkit-font-smoothing: antialiased;
+
+    svg {
+        margin-right: 4px;
+    }
 
     &.primary {
         @include button-bg($btn--primary);

@@ -2,6 +2,7 @@ import React from 'react';
 import Team from './Team';
 import matchService from '../services/match';
 import MatchMenu from './MatchMenu';
+import { GiSoccerBall, GiShield } from 'react-icons/gi';
 
 class Match extends React.Component {
     constructor(props) {
@@ -109,7 +110,15 @@ class Match extends React.Component {
                         }`}
                         disabled={isMatchEnded}
                         onClick={() => this.playTurn()}>
-                        {isUserAttacking ? 'Attack' : 'Defend'}
+                        {isUserAttacking ? (
+                            <>
+                                <GiSoccerBall /> Attack
+                            </>
+                        ) : (
+                            <>
+                                <GiShield /> Defend
+                            </>
+                        )}
                     </button>
                 )}
                 {isMatchEnded && (
@@ -119,9 +128,7 @@ class Match extends React.Component {
                 )}
 
                 {timelineBar}
-                <Team
-                    team="opponent"
-                    cards={cards.opponent}></Team>
+                <Team team="opponent" cards={cards.opponent}></Team>
             </div>
         );
     }

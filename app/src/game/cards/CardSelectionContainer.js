@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 
 import AddCard from './AddCard';
+import CardsList from './CardsList';
 import PropTypes from 'prop-types';
+import { FaDownload, FaRandom, FaUpload } from 'react-icons/fa';
+import { MdDeleteForever } from 'react-icons/md';
+import { GiSoccerBall } from 'react-icons/gi';
 
 import gameService from '../services/game';
-import CardsList from './CardsList';
 import dbService from '../../app/database';
 
 const maxPlayers = gameService.getMaxPlayers();
@@ -73,32 +76,34 @@ const CardSelectionContainer = ({ cards, removeCard, setTeam, handles }) => {
         <div className="game-menu">
             {cards.length > 0 && (
                 <button className="btn primary" onClick={() => setTeam([])}>
-                    Clear Team
+                    <MdDeleteForever /> Clear Team
                 </button>
             )}
             <button
                 className="btn primary"
                 onClick={() => setTeam(gameService.generateTeam())}>
-                Random Team
+                <FaRandom /> Random Team
             </button>
             <button className="btn primary" onClick={() => loadTeam()}>
-                Load Team
+                <FaDownload /> Load Team
             </button>
             {cards.length === maxPlayers && (
                 <button className="btn primary" onClick={() => saveTeam(cards)}>
-                    Save team
+                    <FaUpload /> Save team
                 </button>
             )}
             {cards.length === maxPlayers && (
                 <button
                     className="btn success"
                     onClick={() => handles.start(cards)}>
-                    Start Game
+                    <GiSoccerBall /> Start Game
                 </button>
             )}
         </div>
     );
-    const cardsList = <CardsList cards={cards} removeHandle={removeCard}></CardsList>;
+    const cardsList = (
+        <CardsList cards={cards} removeHandle={removeCard}></CardsList>
+    );
 
     return (
         <>
