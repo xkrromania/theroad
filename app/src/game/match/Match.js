@@ -2,7 +2,8 @@ import React from 'react';
 import Team from './Team';
 import matchService from '../services/match';
 import MatchMenu from './MatchMenu';
-import { GiSoccerBall, GiShield } from 'react-icons/gi';
+import { GiSoccerBall } from 'react-icons/gi';
+import { FaShieldAlt } from 'react-icons/fa';
 
 class Match extends React.Component {
     constructor(props) {
@@ -76,7 +77,12 @@ class Match extends React.Component {
                                     : ''
                             }`}>
                             <span className="minute">{entry.minute}'</span>
-                            <span className="text">{entry.text}</span>
+                            <span className="text">
+                                <i className="goal-icon">
+                                    {entry.isGoal && <GiSoccerBall />}
+                                </i>
+                                {entry.text}
+                            </span>
                         </span>
                     );
                 })}
@@ -116,7 +122,7 @@ class Match extends React.Component {
                             </>
                         ) : (
                             <>
-                                <GiShield /> Defend
+                                <FaShieldAlt /> Defend
                             </>
                         )}
                     </button>

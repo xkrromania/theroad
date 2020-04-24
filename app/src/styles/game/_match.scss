@@ -85,14 +85,12 @@
             text-align: center;
             font-size: 0.8em;
         }
-    }
 
-    .middle-line {
-        background: $highlight-color;
-        position: absolute;
-        top: calc(50% - 1.5px);
-        height: 3px;
-        width: 100%;
+        .goal-icon {
+            font-size: 1.2em;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
     }
 }
 

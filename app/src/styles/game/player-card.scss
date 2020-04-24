@@ -8,7 +8,6 @@
     flex-direction: column;
     overflow: visible;
     justify-content: center;
-    min-width: 150px;
     padding: 8px;
     transform: scale(0.9);
 
@@ -44,12 +43,12 @@
         }
     }
 
-    &--atk {
-        background: $attacker-bg;
+    &--fwd {
+        background: $forward-bg;
         color: $light-text;
 
         .player-card__stat {
-            background: lighten($attacker-bg, 5%);
+            background: lighten($forward-bg, 5%);
         }
     }
 
@@ -60,8 +59,12 @@
         span {
             font-size: 0.8em;
             border-radius: 8px;
-            ;
             padding: 4px 8px;
+        }
+
+        svg {
+            margin-right: 4px;
+            vertical-align: middle
         }
     }
 
@@ -69,6 +72,7 @@
         font-family: $highlight-font;
         font-size: 2em;
         margin: 8px 0;
+        text-align: center;
     }
 
     &__stats {
@@ -105,6 +109,7 @@
 
             svg {
                 animation: shakeStat 2s ease-in infinite;
+                vertical-align: middle
             }
         }
 

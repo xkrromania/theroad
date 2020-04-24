@@ -66,7 +66,7 @@ const CardSelectionContainer = ({ cards, removeCard, setTeam, handles }) => {
             await dbService.setTeam(cards);
             showNotification('Your team has been saved.', 'success');
         } catch (err) {
-            console.dir(err);
+            console.error(err);
             showNotification('The team could not be saved..', 'error');
         }
     }

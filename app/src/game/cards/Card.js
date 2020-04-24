@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import statsService from '../services/stats';
 import typesService from '../services/types';
+import { FaShieldAlt, FaHandPaper } from 'react-icons/fa';
+import { GiSoccerBall } from 'react-icons/gi';
 
 const statsOptions = statsService.get();
 const typesOptions = typesService.get();
@@ -9,7 +11,12 @@ const Card = ({ name, type, stats, removeHandle }) => {
     const selectedType = typesOptions.find(option => option.value === type);
     const cardClass = (
         <div className="card__class">
-            <span>{selectedType.label}</span>
+            <span>
+                {selectedType.value === 'gkr' && <FaHandPaper />}
+                {selectedType.value === 'def' && <FaShieldAlt />}
+                {selectedType.value === 'fwd' && <GiSoccerBall />}
+                {selectedType.label}
+            </span>
         </div>
     );
 

@@ -39,6 +39,7 @@ const FormField = ({ label, type, name, value, options, handleChange }) => {
                     id={name}
                     name={name}
                     type={type}
+                    maxLength={50}
                     value={value}
                     onChange={handleChange}
                 />
@@ -48,7 +49,7 @@ const FormField = ({ label, type, name, value, options, handleChange }) => {
                 <textarea
                     className="textarea"
                     id={name}
-                    maxLength = "100"
+                    maxLength ="100"
                     name={name}
                     type={type}
                     value={value}

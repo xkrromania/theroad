@@ -28,7 +28,7 @@ const generateTeam = (minAttr, maxAttr) => {
         if (i <= outfieldPlayers / 2) {
             possibleTypes.push('def');
         } else {
-            possibleTypes.push('atk');
+            possibleTypes.push('fwd');
         }
     }
 

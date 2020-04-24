@@ -64,8 +64,8 @@ $card-bg: white;
         color: $light-text;
     }
 
-    &--atk {
-        background: $attacker-bg;
+    &--fwd {
+        background: $forward-bg;
         color: $light-text;
     }
 
@@ -80,8 +80,12 @@ $card-bg: white;
         span {
             font-size: 0.8em;
             border-radius: 8px;
-            ;
             padding: 4px 8px;
+        }
+
+        svg {
+            margin-right: 4px;
+            vertical-align: middle
         }
     }
 

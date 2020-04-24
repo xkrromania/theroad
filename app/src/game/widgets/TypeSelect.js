@@ -1,19 +1,34 @@
 import React from 'react';
 import typesService from '../services/types';
-import FormField from '../../components/FormField';
 import PropTypes from 'prop-types';
 
 const TypeSelect = ({ value, handleChange }) => {
     const types = typesService.get();
 
     return (
-        <FormField
-            label="Player Role"
-            type="select"
-            name="type"
-            value={value}
-            options={types}
-            handleChange={handleChange}></FormField>
+        <>
+            <div className="form-field">
+                <label className="label" htmlFor="type">
+                    Player Role
+                </label>
+                <div className="form-field__radio-group">
+                    {types.map(type => (
+                        <div key={type.id} className="form-field__radio-entry">
+                            <input
+                                className="radio"
+                                id={type.value}
+                                type="radio"
+                                name="type"
+                                value={type.value}
+                                checked={value === type.value}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor={type.value}>{type.label}</label>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </>
     );
 };
 

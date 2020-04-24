@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import statsService from '../services/stats';
 import typesService from '../services/types';
-import { GiCrackedShield } from 'react-icons/gi';
+import { FaHandPaper, FaShieldAlt } from 'react-icons/fa';
+import { GiCrackedShield, GiBrokenShield, GiSoccerBall } from 'react-icons/gi';
 
 const statsOptions = statsService.get();
 const typesOptions = typesService.get();
@@ -25,11 +26,42 @@ const PlayerCard = ({ card, team, handleSelect }) => {
     };
     const cardClass = (
         <div className="player-card__class">
-            <span>{selectedType.label}</span>
+            <span>
+                {selectedType.value === 'gkr' && <FaHandPaper />}
+                {selectedType.value === 'def' && <FaShieldAlt />}
+                {selectedType.value === 'fwd' && <GiSoccerBall />}
+                {selectedType.label}
+            </span>
         </div>
     );
     const isStatChanged = stat => {
         return card.changedStats.indexOf(stat) > -1;
+    };
+    const getStatText = stat => {
+        let statValue = card.stats[stat];
+
+        if (card.hasHiddenStats) {
+            return '?';
+        }
+
+        if (statValue === 0) {
+            return (
+                <>
+                    <GiBrokenShield />
+                    {statValue}
+                </>
+            );
+        }
+
+        if (isStatChanged(stat)) {
+            return (
+                <>
+                    <GiCrackedShield /> {statValue}
+                </>
+            );
+        }
+
+        return <> {statValue} </>;
     };
     const cardStats = (
         <div className="player-card__stats">
@@ -39,9 +71,7 @@ const PlayerCard = ({ card, team, handleSelect }) => {
                     className={`player-card__stat player-card__stat--${option.property}`}>
                     <span className="stat-label">{option.property}</span>
                     <div className="stat-value">
-                        {isStatChanged(option.property) && <GiCrackedShield />}
-                        {!card.hasHiddenStats && card.stats[option.property]}
-                        {card.hasHiddenStats && '?'}
+                        {getStatText(option.property)}
                     </div>
                 </div>
             ))}

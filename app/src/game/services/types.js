@@ -11,8 +11,8 @@ const TYPES = [
     },
     {
         id: 2,
-        label: 'Attacker',
-        value: 'atk'
+        label: 'Forward',
+        value: 'fwd'
     }
 ];
 

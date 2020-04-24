@@ -4,7 +4,7 @@ import FormField from '../../components/FormField';
 import TypeSelect from '../widgets/TypeSelect';
 import StatsSelect from '../widgets/StatsSelect';
 
-const AddCardForm = ({ name, type, stats, error, handles }) => {
+const AddCardForm = ({name, type, stats, error, handles }) => {
     const isDisabled = name.length === 0 || type.length === 0;
 
     return (

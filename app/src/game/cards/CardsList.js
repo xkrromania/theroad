@@ -19,21 +19,34 @@ const CardsList = ({ cards, removeHandle }) => {
             return;
         }
 
-        console.dir(placeholders);
-
         return placeholders;
     };
 
+    const sortByPosition = function(a, b) {
+        let order = {
+            gkr: 0,
+            def: 1,
+            fwd: 2
+        };
+
+        return order[a.type] - order[b.type];
+    };
+
+    const cardsList = []
+        .concat(cards)
+        .sort((a, b) => sortByPosition(a, b))
+        .map(card => (
+            <Card
+                key={card.id}
+                name={card.name}
+                type={card.type}
+                stats={card.stats}
+                removeHandle={() => removeHandle(card.id)}></Card>
+        ));
+
     return (
         <section className="card-list">
-            {cards.map(card => (
-                <Card
-                    key={card.id}
-                    name={card.name}
-                    type={card.type}
-                    stats={card.stats}
-                    removeHandle={() => removeHandle(card.id)}></Card>
-            ))}
+            {cardsList}
             {fillPlaceholderCards()}
         </section>
     );

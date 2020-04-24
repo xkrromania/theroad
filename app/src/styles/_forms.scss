@@ -2,6 +2,10 @@
 $form__input-color: $dark-text;
 $form__input-border: #d8d8d8;
 $form__label-color: #686868;
+$form__input-disabled: #a0a0a0;
+$form__radio-bg: #fff;
+$form__radio-border: #BBC1E1;
+$form__radio--active-bg: $main-color;
 
 .form-field {
     display: flex;
@@ -10,6 +14,22 @@ $form__label-color: #686868;
     border: none;
     background: #fff;
     padding: 1em;
+
+    &__radio-group {
+        margin-top: 16px;
+        flex-direction: row;
+    }
+
+
+    &__radio-entry {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+
+        &+& {
+            margin-top: 8px;
+        }
+    }
 
     .input,
     .select,
@@ -53,8 +73,61 @@ $form__label-color: #686868;
         line-height: 1.5em;
     }
 
+    .radio {
+        appearance: none;
+        height: 21px;
+        width: 21px;
+        outline: none;
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+        margin: 0;
+        cursor: pointer;
+        border: 1px solid $form__input-border;
+        border-radius: 50%;
+        background: $form__radio-bg;
+        transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+
+        &:checked {
+            background: $main-color;
+            border: 1px solid #fefefe;
+            box-shadow: 0 0 0 2px darken($form__radio-bg, 10%);
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+
+            &:checked {
+                background: darken($form__input-disabled, 5%);
+                border-color: darken($form__input-disabled, 10%);
+            }
+
+            &+label {
+                cursor: not-allowed;
+            }
+        }
+
+        &:hover,
+        &:focus {
+            &:not(:checked) {
+                &:not(:disabled) {
+                    border-color: lighten($form__radio--active-bg, 10%);
+                }
+            }
+        }
+
+        &+label {
+            font-size: 14px;
+            line-height: 21px;
+            display: inline-block;
+            vertical-align: top;
+            cursor: pointer;
+            margin-left: 4px;
+        }
+    }
+
     .label {
-        color: $form__label-color;
         font-size: 0.8em;
         text-transform: uppercase;
     }
