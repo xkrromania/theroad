@@ -54,15 +54,7 @@ class Match extends React.Component {
     }
 
     render() {
-        const {
-            cards,
-            error,
-            isMatchEnded,
-            isUserAttacking,
-            minute,
-            score,
-            timeline
-        } = this.state;
+        const { cards, error, isMatchEnded, isUserAttacking, minute, score, timeline } = this.state;
         const { handles } = this.props;
 
         const timelineBar = (
@@ -71,16 +63,10 @@ class Match extends React.Component {
                     return (
                         <span
                             key={entry.id}
-                            className={`timeline__entry ${
-                                entry.isUserAttacking
-                                    ? 'timeline__entry--attacking'
-                                    : ''
-                            }`}>
+                            className={`timeline__entry ${entry.isUserAttacking ? 'timeline__entry--attacking' : ''}`}>
                             <span className="minute">{entry.minute}'</span>
                             <span className="text">
-                                <i className="goal-icon">
-                                    {entry.isGoal && <GiSoccerBall />}
-                                </i>
+                                <i className="goal-icon">{entry.isGoal && <GiSoccerBall />}</i>
                                 {entry.text}
                             </span>
                         </span>
@@ -101,19 +87,12 @@ class Match extends React.Component {
                     isMatchEnded={isMatchEnded}
                     isUserAttacking={isUserAttacking}
                     actions={menuActions}></MatchMenu>
-                {error.length > 0 && (
-                    <div className="alert alert--error">{error}</div>
-                )}
-                <Team
-                    team="user"
-                    cards={cards.user}
-                    handleSelect={this.selectCard}></Team>
+                {error.length > 0 && <div className="alert alert--error">{error}</div>}
+                <Team team="user" cards={cards.user} handleSelect={this.selectCard}></Team>
 
                 {!isMatchEnded && (
                     <button
-                        className={`btn ${
-                            isUserAttacking ? 'success' : 'primary'
-                        }`}
+                        className={`btn ${isUserAttacking ? 'success' : 'primary'}`}
                         disabled={isMatchEnded}
                         onClick={() => this.playTurn()}>
                         {isUserAttacking ? (
@@ -127,11 +106,7 @@ class Match extends React.Component {
                         )}
                     </button>
                 )}
-                {isMatchEnded && (
-                    <span className="alert alert--success">
-                        The game has ended.
-                    </span>
-                )}
+                {isMatchEnded && <span className="alert alert--success">The game has ended.</span>}
 
                 {timelineBar}
                 <Team team="opponent" cards={cards.opponent}></Team>

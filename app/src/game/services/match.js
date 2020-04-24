@@ -5,6 +5,7 @@ const TIMELINE_MIN = 5;
 const TIMELINE_MAX = 10;
 const MAX_LOST_STAT = 6;
 const MIN_LOST_STAT = 1;
+const DEFAULT_DEFICIT = 0.5;
 
 let timelineEntryId = 0;
 let state = {
@@ -85,36 +86,25 @@ const addTurnEvent = text => {
  * @returns {number}
  */
 const getTypeDeficit = (type, isAttacking) => {
-    if (isAttacking) {
-        // Attack with attacker (100% attributes)
-        if (type === 'atk') {
-            return 1;
+    const percentages = {
+        attacking: {
+            gkr: 0.1,
+            def: 0.5,
+            fwd: 1
+        },
+        defending: {
+            gkr: 0.8,
+            def: 1,
+            fwd: 0.1
         }
+    };
+    const percentageGroup = isAttacking ? 'attacking' : 'defending';
 
-        // Attack with defender (50% attributes)
-        if (type === 'def') {
-            return 0.5;
-        }
-
-        // Attack with goalkeeper (10% attributes)
-        return 0.1;
-    } else {
-        // Defend with attacker (10% attributes)
-        if (type === 'atk') {
-            return 0.1;
-        }
-
-        // Defend with defender (100%)
-        if (type === 'def') {
-            return 1;
-        }
-
-        // Defend with goalkeeper (90%)
-        return 0.9;
-    }
+    return percentages[percentageGroup][type] || DEFAULT_DEFICIT;
 };
 
 /**
+ * Get the card compare value that will be used for this turn
  *
  * @param {object} stats
  * @param {string} type
@@ -123,26 +113,19 @@ const getTypeDeficit = (type, isAttacking) => {
  *
  * @returns {object}
  */
-const getCardLevelForTurn = (stats, type, scenario, isAttacking) => {
-    let typeDeficit = getTypeDeficit(type, isAttacking);
+const getCardValueForTurn = (stats, type, scenario, isAttacking) => {
+    const typeDeficit = getTypeDeficit(type, isAttacking);
+    const statAffectedMap = {
+        set_piece: 'int',
+        cross: 'phy',
+        open_play: 'abi'
+    };
+    let statAffected = statAffectedMap[scenario] || 'abi';
 
-    switch (scenario) {
-        case 'set_piece':
-            return {
-                name: 'int',
-                value: parseInt(stats.int * typeDeficit)
-            };
-        case 'cross':
-            return {
-                name: 'phy',
-                value: parseInt(stats.phy * typeDeficit) // Physical stats are the same for each pos.
-            };
-        default:
-            return {
-                name: 'abi',
-                value: parseInt(stats.abi * typeDeficit)
-            };
-    }
+    return {
+        name: statAffected,
+        value: parseInt(stats[statAffected] * typeDeficit)
+    };
 };
 
 /**
@@ -158,7 +141,6 @@ const updateCardStat = (team, cardId, stat, lostPoints) => {
 
     state.cards[team].forEach(card => {
         if (card.id === cardId) {
-
             value = card.stats[stat] - lostPoints;
             value = value < 0 ? 0 : value;
             card.stats = { ...card.stats, [stat]: value };
@@ -170,66 +152,68 @@ const updateCardStat = (team, cardId, stat, lostPoints) => {
 };
 
 /**
- * Simulate the event that involves the two cards
+ * Get the side that won the turn
  *
- * @param {object} card
- * @param {object} opponentCard
  * @param {string} offTeam
+ * @param {object} offCard
+ * @param {object} defCard
+ * @param {number} lostStatPoints
+ * @param {string} scenario
  *
- * @return {string}
+ * @returns {string} offense/defense
  */
-const simulateEvent = (offCard, defCard, offTeam) => {
+const getTurnWinner = function(offTeam, offCard, defCard, lostStatPoints, scenario) {
+    const offStat = getCardValueForTurn(offCard.stats, offCard.type, scenario, true);
+    const defStat = getCardValueForTurn(defCard.stats, defCard.type, scenario, false);
+    const difference = offStat.value - defStat.value;
+    const winner = difference > 0 ? 'offense' : 'defense';
+
+    if (winner === 'offense') {
+        updateCardStat(offTeam === 'user' ? 'opponent' : 'user', defCard.id, defStat.name, lostStatPoints);
+    } else {
+        updateCardStat(offTeam, offCard.id, offStat.name, lostStatPoints);
+    }
+
+    return winner;
+};
+
+/**
+ * Simulate the event that involves the two cards
+ */
+const simulateEvent = () => {
+    const selected = {
+        user: getSelectedCard('user'),
+        opponent: getSelectedCard('opponent')
+    };
+    const offCard = state.isUserAttacking ? selected.user : selected.opponent;
+    const defCard = state.isUserAttacking ? selected.opponent : selected.user;
+    const offTeam = state.isUserAttacking ? 'user' : 'opponent';
     const scenario = scenariosService.getScenarioName(offCard, defCard);
-    const offStat = getCardLevelForTurn(
-        offCard.stats,
-        offCard.type,
-        scenario,
-        true
-    );
-    const defStat = getCardLevelForTurn(
-        defCard.stats,
-        defCard.type,
-        scenario,
-        false
-    );
 
     let timelineText = '';
     let isGoal = false;
-    let difference = offStat.value - defStat.value;
-    let lostStatPoints = utilsService.getRandom(MIN_LOST_STAT, MAX_LOST_STAT);
 
-    // Offense Wins
-    if (difference > 0) {
+    const lostStatPoints = utilsService.getRandom(MIN_LOST_STAT, MAX_LOST_STAT);
+    const winner = getTurnWinner(offTeam, offCard, defCard, lostStatPoints, scenario);
+
+    if (winner === 'offense') {
         isGoal = true;
         state.score[offTeam]++;
-        timelineText = scenariosService.getTextByScenario(
-            scenario,
-            offCard,
-            defCard,
-            isGoal,
-            lostStatPoints
-        );
-        updateCardStat(
-            offTeam === 'user' ? 'opponent' : 'user',
-            defCard.id,
-            defStat.name,
-            lostStatPoints
-        );
-
-        return timelineText;
     }
 
-    // DefenseWins
-    updateCardStat(offTeam, offCard.id, offStat.name, lostStatPoints);
-    timelineText = scenariosService.getTextByScenario(
-        scenario,
-        offCard,
-        defCard,
-        isGoal,
-        lostStatPoints
-    );
+    timelineText = scenariosService.getTextByScenario(scenario, offCard, defCard, isGoal, lostStatPoints);
 
-    return timelineText;
+    addTurnEvent(timelineText);
+};
+
+/**
+ * Auto select an opponent card for the turn
+ */
+const autoSelectOpponentCard = () => {
+    let opponentCardId = state.isUserAttacking ? utilsService.getRandom(0, 2) : utilsService.getRandom(3, 4);
+
+    selectCardForTeam('opponent', opponentCardId);
+    state.cards.opponent[opponentCardId].hasHiddenStats = false;
 };
 
 /**
@@ -241,31 +225,12 @@ const simulateTurn = () => {
     }
 
     if (state.timeline.length === 0) {
-       addGenericEvent('Game started');
+        addGenericEvent('Game started.');
     }
 
     try {
-        let opponentCardId = state.isUserAttacking
-            ? utilsService.getRandom(0, 2)
-            : utilsService.getRandom(3, 4);
-        selectCardForTeam('opponent', opponentCardId);
-        state.cards.opponent[opponentCardId].hasHiddenStats = false;
-        let opponentCard = getSelectedCard('opponent');
-
-        let selected = {
-            user: getSelectedCard('user'),
-            opponent: opponentCard
-        };
-
-        if (state.isUserAttacking) {
-            addTurnEvent(
-                simulateEvent(selected.user, selected.opponent, 'user')
-            );
-        } else {
-            addTurnEvent(
-                simulateEvent(selected.opponent, selected.user, 'opponent')
-            );
-        }
+        autoSelectOpponentCard();
+        simulateEvent();
     } catch (error) {
         console.error(error);
     }

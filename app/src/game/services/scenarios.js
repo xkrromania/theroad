@@ -26,9 +26,7 @@ const getTextByScenario = (scenario, offCard, defCard, isGoal, lostStatPoints) =
             statLost = 'INT';
             if (isGoal) {
                 text = `Goal scored by ${offCard.name}! `;
-                text += isDefCardGoalkeeper
-                    ? `He converts the penalty `
-                    : `He scores from free kick `;
+                text += isDefCardGoalkeeper ? `He converts the penalty ` : `He scores from free kick `;
                 text += `despite ${defCard.name} efforts`;
             } else {
                 text = `${defCard.name} `;
@@ -41,9 +39,7 @@ const getTextByScenario = (scenario, offCard, defCard, isGoal, lostStatPoints) =
             statLost = 'PHY';
             if (isGoal) {
                 text = `Goal! ${offCard.name} heads the ball into the net `;
-                text += isDefCardGoalkeeper
-                    ? `despite ${defCard.name} efforts`
-                    : `after jumping with ${defCard.name}`;
+                text += isDefCardGoalkeeper ? `despite ${defCard.name} efforts` : `after jumping with ${defCard.name}`;
             } else {
                 text = `${defCard.name} `;
                 text += isDefCardGoalkeeper
