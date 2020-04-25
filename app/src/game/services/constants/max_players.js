@@ -1,3 +1,3 @@
-const MAX_PLAYERS = 5;
+const MAX_PLAYERS = 4;
 
 export default MAX_PLAYERS;

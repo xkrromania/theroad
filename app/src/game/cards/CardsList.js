@@ -25,9 +25,8 @@ const CardsList = ({ cards, removeHandle }) => {
 
     const sortByPosition = function(a, b) {
         let order = {
-            gkr: 0,
-            def: 1,
-            fwd: 2
+            def: 0,
+            fwd: 1
         };
 
         return order[a.type] - order[b.type];

@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import statsService from '../services/stats';
 import typesService from '../services/types';
-import { FaHandPaper, FaShieldAlt } from 'react-icons/fa';
+import { FaShieldAlt } from 'react-icons/fa';
 import { GiCrackedShield, GiBrokenShield, GiSoccerBall } from 'react-icons/gi';
 
 const statsOptions = statsService.get();
 const typesOptions = typesService.get();
-const UserCard = ({ card, team, handleSelect }) => {
+const TeamCard = ({ card, team, handleSelect }) => {
     const cardStyle = {
-        user: !card.hasHiddenStats ? 'user-card--selectable' : '',
-        selected: card.isSelected ? 'user-card--selected' : '',
-        type: `user-card--${card.type}`
+        user: !card.hasHiddenStats ? 'team-card--selectable' : '',
+        selected: card.isSelected ? 'team-card--selected' : '',
+        type: `team-card--${card.type}`
     };
-    const className = `user-card ${cardStyle.type} ${cardStyle.user} ${cardStyle.selected}`;
+    const className = `team-card ${cardStyle.type} ${cardStyle.user} ${cardStyle.selected}`;
     const selectedType = typesOptions.find(
         option => option.value === card.type
     );
@@ -25,9 +25,8 @@ const UserCard = ({ card, team, handleSelect }) => {
         return handleSelect(team, card.id);
     };
     const cardClass = (
-        <div className="user-card__class">
+        <div className="team-card__class">
             <span>
-                {selectedType.value === 'gkr' && <FaHandPaper />}
                 {selectedType.value === 'def' && <FaShieldAlt />}
                 {selectedType.value === 'fwd' && <GiSoccerBall />}
                 {selectedType.label}
@@ -64,11 +63,11 @@ const UserCard = ({ card, team, handleSelect }) => {
         return <> {statValue} </>;
     };
     const cardStats = (
-        <div className="user-card__stats">
+        <div className="team-card__stats">
             {statsOptions.map(option => (
                 <div
                     key={option.id}
-                    className={`user-card__stat user-card__stat--${option.property}`}>
+                    className={`team-card__stat team-card__stat--${option.property}`}>
                     <span className="stat-label">{option.property}</span>
                     <div className="stat-value">
                         {getStatText(option.property)}
@@ -87,9 +86,9 @@ const UserCard = ({ card, team, handleSelect }) => {
     );
 };
 
-UserCard.propTypes = {
+TeamCard.propTypes = {
     card: PropTypes.object.isRequired,
     handleSelect: PropTypes.func
 };
 
-export default UserCard;
+export default TeamCard;

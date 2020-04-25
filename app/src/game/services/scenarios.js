@@ -17,7 +17,6 @@ const SCENARIOS = {
  * @returns {string}
  */
 const getTextByScenario = (scenario, offCard, defCard, isGoal, lostStatPoints) => {
-    const isDefCardGoalkeeper = defCard.type === 'gkr';
     let text = '';
     let statLost = '';
 
@@ -26,40 +25,27 @@ const getTextByScenario = (scenario, offCard, defCard, isGoal, lostStatPoints) =
             statLost = 'INT';
             if (isGoal) {
                 text = `Goal scored by ${offCard.name}! `;
-                text += isDefCardGoalkeeper ? `He converts the penalty ` : `He scores from free kick `;
+                text += `He scores from free kick `;
                 text += `despite ${defCard.name} efforts`;
             } else {
                 text = `${defCard.name} `;
-                text += isDefCardGoalkeeper
-                    ? `saves the attempt from ${offCard.name}`
-                    : `heads the ball out after the free kick from ${offCard.name}`;
+                text += `heads the ball out after the free kick from ${offCard.name}`;
             }
             break;
         case 'cross':
             statLost = 'PHY';
             if (isGoal) {
-                text = `Goal! ${offCard.name} heads the ball into the net `;
-                text += isDefCardGoalkeeper ? `despite ${defCard.name} efforts` : `after jumping with ${defCard.name}`;
+                text = `Goal! ${offCard.name} heads the ball into the net despite ${defCard.name} efforts`;
             } else {
-                text = `${defCard.name} `;
-                text += isDefCardGoalkeeper
-                    ? `saves the attempt from ${offCard.name}`
-                    : `heads the ball out after the free kick from ${offCard.name}`;
+                text = `${defCard.name} heads the ball out after the free kick from ${offCard.name}`;
             }
             break;
         default:
             statLost = 'ABI';
             if (isGoal) {
-                text = `${offCard.name} `;
-                text += 'Goal! ';
-                text += isDefCardGoalkeeper
-                    ? ` shoots on goal and the attempt can't be saved by ${defCard.name}`
-                    : ` shoots and scores despite ${defCard.name} opposition`;
+                text = `Goal! ${offCard.name} shoots and scores despite ${defCard.name} opposition`;
             } else {
-                text = `${defCard.name} `;
-                text += isDefCardGoalkeeper
-                    ? ` saves the shot from ${offCard.name}`
-                    : ` takes the ball from ${offCard.name}`;
+                text = `${defCard.name} takes the ball from ${offCard.name}`;
             }
             break;
     }

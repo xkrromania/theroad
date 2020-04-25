@@ -1,4 +1,4 @@
-.user-card {
+.team-card {
     align-items: center;
     background: #fff;
     border: 1px solid darken($app-bg-fallback, 5%);
@@ -13,7 +13,7 @@
     padding: 8px;
     transform: scale(0.9);
 
-    &+.user-card {
+    &+.team-card {
         margin-left: 8px;
     }
 
@@ -21,20 +21,11 @@
         cursor: pointer;
     }
 
-    &--gkr {
-        background: $goalkeeper-bg;
-        color: $dark-text;
-
-        .user-card__stat {
-            background: lighten($goalkeeper-bg, 5%);
-        }
-    }
-
     &--def {
         background: $defender-bg;
         color: $light-text;
 
-        .user-card__stat {
+        .team-card__stat {
             background: lighten($defender-bg, 5%);
         }
     }
@@ -43,7 +34,7 @@
         background: $forward-bg;
         color: $light-text;
 
-        .user-card__stat {
+        .team-card__stat {
             background: lighten($forward-bg, 5%);
         }
     }
@@ -75,7 +66,7 @@
         align-content: center;
         display: flex;
         flex-direction: row;
-        margin: 32px 4px 8px;
+        margin: 8px 4px;
     }
 
     &__stat {
@@ -125,7 +116,7 @@
     }
 }
 
-.user-card--selected {
+.team-card--selected {
     animation: jumpRelative 2s infinite;
     border-top: 4px solid $highlight-color;
     border-bottom: 4px solid $highlight-color;

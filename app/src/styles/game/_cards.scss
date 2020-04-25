@@ -5,7 +5,6 @@ $card-bg: white;
 .card-list {
     display: flex;
     flex-wrap: no-wrap;
-    margin: 8px 0;
     overflow-x: scroll;
     padding: 8px 0 16px;
 }
@@ -53,11 +52,6 @@ $card-bg: white;
         border: 2px dashed darken($app-bg-fallback, 15%);
         height: 356px;
         opacity: .5;
-    }
-
-    &--gkr {
-        background: $goalkeeper-bg;
-        color: $dark-text;
     }
 
     &--def {

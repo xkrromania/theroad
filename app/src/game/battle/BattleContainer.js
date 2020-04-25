@@ -3,7 +3,7 @@ import matchService from '../services/match';
 import BattleCard from './BattleCard';
 import BattleMenu from './BattleMenu';
 import Notification from '../../components/Notification';
-import UserCardsContainer from './UserCardsContainer';
+import TeamCardsContainer from './TeamCardsContainer';
 import { GiSoccerBall } from 'react-icons/gi';
 
 class BattleContainer extends React.Component {
@@ -104,10 +104,10 @@ class BattleContainer extends React.Component {
                 {isMatchEnded && <Notification text="Game has ended" type="success" />}
                 {error.length > 0 && <Notification text={error} type="error" />}
                 <div className="match-board">
-                    <UserCardsContainer
+                    <TeamCardsContainer
                         team="user"
                         cards={cards.user}
-                        handleSelect={this.selectCard}></UserCardsContainer>
+                        handleSelect={this.selectCard}></TeamCardsContainer>
                     <BattleMenu
                         score={score}
                         minute={minute}
@@ -133,6 +133,9 @@ class BattleContainer extends React.Component {
                         </div>
                         {timeline.length > 0 && timelineBar}
                     </section>
+                    <TeamCardsContainer
+                        team="opponent"
+                        cards={cards.opponent}></TeamCardsContainer>
                 </div>
             </>
         );

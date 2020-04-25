@@ -1,7 +1,7 @@
 import React from 'react';
 import statsService from '../services/stats';
 import typesService from '../services/types';
-import { FaHandPaper, FaShieldAlt } from 'react-icons/fa';
+import { FaShieldAlt } from 'react-icons/fa';
 import { GiCrackedShield, GiBrokenShield, GiSoccerBall } from 'react-icons/gi';
 
 const statsOptions = statsService.get();
@@ -15,7 +15,6 @@ const BattleCard = ({ card, isUserCard }) => {
     const cardClass = (
         <div className="battle-card__class">
             <span>
-                {selectedType.value === 'gkr' && <FaHandPaper />}
                 {selectedType.value === 'def' && <FaShieldAlt />}
                 {selectedType.value === 'fwd' && <GiSoccerBall />}
                 {selectedType.label}

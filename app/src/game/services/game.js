@@ -46,11 +46,10 @@ const generateTeam = (minOverall, maxOverall) => {
     maxOverall = maxOverall | 40;
 
     const overall = utilsService.getRandom(minOverall, maxOverall);
-    const possibleTypes = ['gkr'];
     const outfieldPlayers = MAX_PLAYERS - 1;
     let team = [];
-
-    for (let i = 1; i < outfieldPlayers + 1; i++) {
+    let possibleTypes = [];
+    for (let i = 0; i < outfieldPlayers + 1; i++) {
         if (i <= outfieldPlayers / 2) {
             possibleTypes.push('def');
         } else {
@@ -59,7 +58,7 @@ const generateTeam = (minOverall, maxOverall) => {
     }
 
     for (let i = 0; i < MAX_PLAYERS; i++) {
-        let UserCard = {
+        let card = {
             id: i,
             name: getPlayerName(),
             stats: generateStats(overall),
@@ -67,7 +66,7 @@ const generateTeam = (minOverall, maxOverall) => {
             type: possibleTypes[i]
         };
 
-        team.push(UserCard);
+        team.push(card);
     }
 
     return team;

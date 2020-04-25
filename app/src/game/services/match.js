@@ -61,7 +61,7 @@ const setCardsForTeam = (cards, team) => {
     cards.forEach(card => {
         let gameCard = {
             ...card,
-            hasHiddenStats: hasHiddenStats,
+            hasHiddenStats: false, //hasHiddenStats,
             changedStats: [],
             isSelected: false
         };
@@ -130,10 +130,10 @@ const getCardValueForTurn = (stats, type, scenario, isAttacking) => {
  * Auto select an opponent card for the turn
  */
 const autoSelectOpponentCard = () => {
-    let defenderBorderIndex = (MAX_PLAYERS - 1) / 2 + 1;
+    let defenderBorderIndex = MAX_PLAYERS  / 2;
     let opponentCardId = state.isUserAttacking
-        ? utilsService.getRandom(0, defenderBorderIndex)
-        : utilsService.getRandom(defenderBorderIndex + 1, MAX_PLAYERS);
+        ? utilsService.getRandom(0, defenderBorderIndex - 1)
+        : utilsService.getRandom(defenderBorderIndex, MAX_PLAYERS);
 
     selectCardForTeam('opponent', opponentCardId);
     state.cards.opponent[opponentCardId].hasHiddenStats = false;
@@ -217,12 +217,10 @@ const logTurnOutcome = text => {
 const getTypeDeficit = (type, isAttacking) => {
     const percentages = {
         attacking: {
-            gkr: 0.1,
             def: 0.5,
             fwd: 1
         },
         defending: {
-            gkr: 0.8,
             def: 1,
             fwd: 0.1
         }
